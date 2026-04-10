@@ -1,0 +1,5 @@
+pytest
+spacy
+gliner
+setfit
+sentence-transformers

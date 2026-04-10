@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cryptic-cti"
+version = "0.1.3"
+description = "Multilingual CTI collections pipeline for normalizing and structuring cybercrime leads"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "spacy",
+    "gliner",
+    "setfit",
+]
+authors = [
+    { name="Cosmic Octopus" }
+]
+
+[project.scripts]
+cryptic = "cryptic.cli:main"
+
+[tool.setuptools]
+py-modules = []
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["cryptic*"]
+exclude = ["scripts*"]
+namespaces = false
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+]
