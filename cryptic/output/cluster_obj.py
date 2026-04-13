@@ -2,7 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
-from cryptic.output.indicator import Indicator
+from cryptic.output.indicator_obj import Indicator
 from cryptic.output.out_utils import dedupe_list, norm_timestamp, utc_now_iso
 
 

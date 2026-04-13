@@ -2,10 +2,9 @@ from __future__ import annotations
 from typing import Any
 from uuid import uuid4
 
-
-from cryptic.output.out_utils import choose_rep
+from cryptic.output.out_utils import choose_rep, clean_cluster_entities
 from cryptic.output.ctier_ioc_builder import record_to_indicators
-from cryptic.output.cluster_object import Cluster
+from cryptic.output.cluster_obj import Cluster
 
 
 ALLOWED_ENTITY_FIELDS = {"n_malware_or_tools", "n_activity", "n_credential_or_data_types", "n_apps"}
@@ -82,7 +81,7 @@ def build_clusters(records: list[dict[str, Any]]) -> list[Cluster]:
         matched_cluster = None
         for cluster in clusters:
             members = cluster_records[cluster.id]
-            if any(is_overlap(record, member, field_name=None) for member in members):
+            if any(is_overlap(record, member) for member in members):
                 matched_cluster = cluster
                 break
         if matched_cluster is None:
@@ -94,5 +93,6 @@ def build_clusters(records: list[dict[str, Any]]) -> list[Cluster]:
             cluster_records[matched_cluster.id].append(record)
     for cluster in clusters:
         members = cluster_records[cluster.id]
+        clean_cluster_entities(cluster, members)
         cluster.representative_text = choose_rep(members)
     return clusters

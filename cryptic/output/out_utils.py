@@ -3,12 +3,14 @@ from typing import Any
 import csv
 from pathlib import Path
 
+from cryptic.output.cluster_obj import Cluster
+
 
 JUNK_CANDIDATES = {"mw", "is", "n"}
 
-def drop_junk(record: dict[str, Any], min_score: float = 0.35) -> int:
+def drop_junk(record: dict[str, Any], min_score: float = 0.35) -> list[dict[str, Any]]:
     seen: set[tuple[str, str]] = set()
-    usable = 0
+    usable: list[dict[str, Any]] = []
     for cand in record.get("gliner_candidates", []):
         text = str(cand.get("text", "")).strip()
         label = str(cand.get("label", "")).strip().lower()
@@ -26,8 +28,9 @@ def drop_junk(record: dict[str, Any], min_score: float = 0.35) -> int:
         if key in seen:
             continue
         seen.add(key)
-        usable += 1
+        usable.append(cand)
     return usable
+
 
 def choose_rep(records: list[dict[str, Any]]) -> str:
     best_text = ""
@@ -36,8 +39,8 @@ def choose_rep(records: list[dict[str, Any]]) -> str:
         text = str(r.get("raw_text", "")).strip()
         if not text:
             continue
-        usable_count = drop_junk(r)
         text_len = len(text)
+        usable_count = len(drop_junk(r))
         score = (usable_count, text_len)
         if score > best_score:
             best_score = score
@@ -113,3 +116,28 @@ def write_ioc_csv(output_obj, output_path: Path | str) -> Path:
         writer.writerows(rows)
     return output_path
 
+
+def clean_cluster_entities(cluster: Cluster, members: list[dict[str, Any]]) -> None:
+    allowed_malware_or_tools: set[str] = set()
+    allowed_activities: set[str] = set()
+    allowed_credential_data_types: set[str] = set()
+    allowed_platforms: set[str] = set()
+    for record in members:
+        for cand in drop_junk(record):
+            text = str(cand.get("text", "")).strip()
+            label = str(cand.get("label", "")).strip().lower()
+            if not text:
+                continue
+            norm_text = text.casefold()
+            if label == "malware or tool name":
+                allowed_malware_or_tools.add(norm_text)
+            elif label == "activity":
+                allowed_activities.add(norm_text)
+            elif label == "credential or data type":
+                allowed_credential_data_types.add(norm_text)
+            elif label == "platform or application":
+                allowed_platforms.add(norm_text)
+    cluster.malware_or_tools = [v for v in cluster.malware_or_tools if v.strip() and v.strip().casefold() in allowed_malware_or_tools]
+    cluster.activities = [v for v in cluster.activities if v.strip() and v.strip().casefold() in allowed_activities]
+    cluster.credential_data_types = [v for v in cluster.credential_data_types if v.strip() and v.strip().casefold() in allowed_credential_data_types]
+    cluster.platforms = [v for v in cluster.platforms if v.strip() and v.strip().casefold() in allowed_platforms]

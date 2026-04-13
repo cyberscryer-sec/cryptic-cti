@@ -1,7 +1,7 @@
 from __future__ import annotations
 from cryptic.output.out_utils import dedupe_list
-from cryptic.output.output_objects import Output
-from cryptic.output.indicator import Indicator
+from cryptic.output.output_obj import Output
+from cryptic.output.indicator_obj import Indicator
 
 def record_to_indicators(record: dict) -> list[Indicator]:
     source_id = record.get("id", "")

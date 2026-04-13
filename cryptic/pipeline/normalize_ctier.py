@@ -2,7 +2,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 from cryptic.file_utils import default_jsonl_outpath, latest_matching_file, load_json, read_jsonl, write_jsonl, PROJECT_ROOT, PROCESSED_DIR
-from cryptic.normalization.utils import normalize_key, normalize_value, dedupe_preserve_order
+from cryptic.normalization.norm_utils import normalize_key, normalize_value, dedupe_preserve_order
 
 
 MAPPINGS_DIR = PROJECT_ROOT / "cryptic" / "normalization" / "mappings"
