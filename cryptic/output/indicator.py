@@ -4,8 +4,8 @@ from typing import Any
 from cryptic.output.out_utils import dedupe_list, norm_fieldname, norm_timestamp, utc_now_iso
 
 @dataclass(slots=True)
-class IOCItem:
-    indicator_type: str
+class Indicator:
+    type: str
     value: str
     sourced_from: str
     confidence: int | None = None
@@ -16,7 +16,7 @@ class IOCItem:
     is_detection_ioc: bool = True
 
     def __post_init__(self) -> None:
-        self.indicator_type = norm_fieldname(self.indicator_type)
+        self.type = norm_fieldname(self.type)
         self.value = self.value.strip()
         self.tags = self.dedupe("tags")
         self.sourced_from = self.sourced_from.strip()
@@ -24,8 +24,8 @@ class IOCItem:
         self.last_seen = norm_timestamp(self.last_seen)
         if self.valid_til is not None:
             self.valid_til = norm_timestamp(self.valid_til)
-        if not self.indicator_type:
-            raise ValueError("indicator_type cannot be empty")
+        if not self.type:
+            raise ValueError("indicator type cannot be empty")
         if not self.value:
             raise ValueError("value cannot be empty")
         if self.confidence is not None and not (0 <= self.confidence <= 100):
@@ -65,3 +65,4 @@ class IOCItem:
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
+

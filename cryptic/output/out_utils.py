@@ -4,6 +4,47 @@ import csv
 from pathlib import Path
 
 
+JUNK_CANDIDATES = {"mw", "is", "n"}
+
+def drop_junk(record: dict[str, Any], min_score: float = 0.35) -> int:
+    seen: set[tuple[str, str]] = set()
+    usable = 0
+    for cand in record.get("gliner_candidates", []):
+        text = str(cand.get("text", "")).strip()
+        label = str(cand.get("label", "")).strip().lower()
+        score = float(cand.get("score", 0.0))
+        if not text:
+            continue
+        if score < min_score:
+            continue
+        norm_text = text.casefold()
+        if norm_text in JUNK_CANDIDATES:
+            continue
+        if len(norm_text) < 3:
+            continue
+        key = (label, norm_text)
+        if key in seen:
+            continue
+        seen.add(key)
+        usable += 1
+    return usable
+
+def choose_rep(records: list[dict[str, Any]]) -> str:
+    best_text = ""
+    best_score: tuple[int, int] = (-1, -1)
+    for r in records:
+        text = str(r.get("raw_text", "")).strip()
+        if not text:
+            continue
+        usable_count = drop_junk(r)
+        text_len = len(text)
+        score = (usable_count, text_len)
+        if score > best_score:
+            best_score = score
+            best_text = text
+    return best_text
+
+
 def norm_fieldname(field_name: str) -> str:
     return field_name.strip().lower()
 
@@ -71,3 +112,4 @@ def write_ioc_csv(output_obj, output_path: Path | str) -> Path:
         writer.writeheader()
         writer.writerows(rows)
     return output_path
+

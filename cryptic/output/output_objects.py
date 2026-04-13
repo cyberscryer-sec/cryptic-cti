@@ -16,7 +16,7 @@ class Relationship:
         return asdict(self)
 
 @dataclass(slots=True)
-class OUTPUT:
+class Output:
     id: str = field(default_factory=lambda: str(uuid4()))
     type: str = ""
     generated_at: str = field(default_factory=utc_now_iso)

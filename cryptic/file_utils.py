@@ -1,7 +1,6 @@
 from pathlib import Path
 import json
-import csv
-from cryptic.output.output_objects import OUTPUT
+from cryptic.output.output_objects import Output
 
 def write_jsonl(path: Path, records: list[dict]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -36,7 +35,7 @@ def load_json(path: Path) -> dict:
         return json.load(f)
     
 
-def write_json_output(output_obj: OUTPUT, output_path: Path | str) -> Path:
+def write_json_output(output_obj: Output, output_path: Path | str) -> Path:
     output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w", encoding="utf-8") as f:
