@@ -1,17 +1,16 @@
 from __future__ import annotations
 import sys
 from pathlib import Path
-from cryptic.file_utils import latest_matching_file, load_json, read_jsonl, write_jsonl
+from cryptic.file_utils import default_jsonl_outpath, latest_matching_file, load_json, read_jsonl, write_jsonl, PROJECT_ROOT, PROCESSED_DIR
 from cryptic.normalization.utils import normalize_key, normalize_value, dedupe_preserve_order
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]  # adjust as needed based on your repository structure
-PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
-NORMALIZATION_DIR = PROJECT_ROOT / "data" / "normalization"
 
-MALWARE_TOOL_NORMALIZATION = load_json(NORMALIZATION_DIR / "malware_tools.json")
-ACTIVITY_NORMALIZATION = load_json(NORMALIZATION_DIR / "activities.json")
-DATA_TYPE_NORMALIZATION = load_json(NORMALIZATION_DIR / "data_types.json")
-PLATFORM_NORMALIZATION = load_json(NORMALIZATION_DIR / "apps.json")
+MAPPINGS_DIR = PROJECT_ROOT / "cryptic" / "normalization" / "mappings"
+
+MALWARE_TOOL_NORMALIZATION = load_json(MAPPINGS_DIR / "malware_tools.json")
+ACTIVITY_NORMALIZATION = load_json(MAPPINGS_DIR / "activities.json")
+DATA_TYPE_NORMALIZATION = load_json(MAPPINGS_DIR / "data_types.json")
+PLATFORM_NORMALIZATION = load_json(MAPPINGS_DIR / "apps.json")
 
 LABEL_CONFIG = {
     "malware or tool name": {
@@ -32,20 +31,13 @@ LABEL_CONFIG = {
     },
 }
 
-
-def default_output_path(input_path: Path) -> Path:
-    if "ctier_classified" in input_path.name:
-        output_name = input_path.name.replace("ctier_classified", "ctier_normalized")
-    else:
-        output_name = f"{input_path.stem}_normalized{input_path.suffix}"
-    return input_path.with_name(output_name)
-
+IN_STAGE = "ctier_classified"
+OUT_STAGE = "ctier_normalized"
 
 def normalize_candidates(record: dict) -> dict:
     candidates = record.get("gliner_candidates") or []
     if not isinstance(candidates, list):
         raise TypeError("gliner_candidates must be a list")
-
     unmapped = []
     normalized_fields = {
         config["output_field"]: []
@@ -56,7 +48,6 @@ def normalize_candidates(record: dict) -> dict:
         label = normalize_key(item.get("label") or "")
         if not text:
             continue
-
         config = LABEL_CONFIG.get(label)
         if not config:
             continue
@@ -64,20 +55,18 @@ def normalize_candidates(record: dict) -> dict:
         normalized_fields[config["output_field"]].append(normalized)
         if not matched:
             unmapped.append((label, text))
-
     enriched = dict(record)
     for field, values in normalized_fields.items():
         enriched[field] = dedupe_preserve_order(values)
     enriched["unmapped"] = dedupe_preserve_order(unmapped)
     enriched["norm_status"] = "normalized"
-
     return enriched
 
 
 def run_normalizer(i: Path, o: Path | None = None) -> Path:
     print(f"[run_normalizer] START input={i}", flush=True)
     input_path = Path(i)
-    output_path = Path(o) if o is not None else default_output_path(input_path)
+    output_path = Path(o) if o is not None else default_jsonl_outpath(input_path, IN_STAGE, OUT_STAGE)
     print(f"Normalizing {input_path} ...")
     records = read_jsonl(input_path)
     normalized_rows = []

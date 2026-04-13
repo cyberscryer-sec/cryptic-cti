@@ -2,21 +2,13 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 from setfit import SetFitModel
-from cryptic.file_utils import latest_matching_file, read_jsonl, write_jsonl
+from cryptic.file_utils import default_jsonl_outpath, latest_matching_file, read_jsonl, write_jsonl, PROJECT_ROOT, PROCESSED_DIR
 from cryptic.classification.utils import load_model
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]  # adjust as needed based on your repository structure
-PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
-MODEL_DIR = PROJECT_ROOT / "models" / "setfit_ctier_v1"
 
-
-def default_output_path(input_path: Path) -> Path:
-    if "ctier_semantic_candidates" in input_path.name:
-        output_name = input_path.name.replace("ctier_semantic_candidates", "ctier_classified")
-    else:
-        output_name = f"{input_path.stem}_classified{input_path.suffix}"
-    return input_path.with_name(output_name)
-
+MODEL_DIR = PROJECT_ROOT / "trained_models" / "setfit_ctier_v1"
+IN_STAGE = "ctier_semantic_candidates"
+OUT_STAGE = "ctier_classified"
 
 def classify_record(record: dict, model: SetFitModel) -> dict:
     raw_text = (record.get("raw_text") or "").strip()
@@ -34,7 +26,7 @@ def classify_record(record: dict, model: SetFitModel) -> dict:
 def run_classifier(i: Path, o: Path | None = None) -> Path:
     print(f"[run_classifier] START input={i}", flush=True)
     input_path = Path(i)
-    output_path = Path(o) if o is not None else default_output_path(input_path)
+    output_path = Path(o) if o is not None else default_jsonl_outpath(input_path, IN_STAGE, OUT_STAGE)
     print("Loading semantic CTIER records...")
     records = read_jsonl(input_path)
     print("Loading SetFit model...")

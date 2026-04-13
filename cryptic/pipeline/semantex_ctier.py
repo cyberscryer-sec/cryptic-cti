@@ -3,18 +3,10 @@ from pathlib import Path
 import sys
 
 from cryptic.extraction.engine import ExtractionEngine
-from cryptic.file_utils import latest_matching_file, read_jsonl, write_jsonl
+from cryptic.file_utils import latest_matching_file, default_jsonl_outpath, read_jsonl, write_jsonl, PROCESSED_DIR
 
-
-PROJECT_ROOT = Path(__file__).resolve().parents[1]  # adjust as needed based on your repository structure
-PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
-
-def default_output_path(input_path: Path) -> Path:
-    if "ctier_records" in input_path.name:
-        output_name = input_path.name.replace("ctier_records", "ctier_semantic_candidates")
-    else:
-        output_name = f"{input_path.stem}_semantic_candidates{input_path.suffix}"
-    return input_path.with_name(output_name)
+IN_STAGE = "ctier_records"
+OUT_STAGE = "ctier_semantic_candidates"
 
 def enrich_record(record: dict, engine: ExtractionEngine) -> dict:
     raw_text = record.get("raw_text") or record.get("raw_entry") or ""
@@ -36,7 +28,7 @@ def enrich_record(record: dict, engine: ExtractionEngine) -> dict:
 def run_semantex(i: Path, o: Path | None = None) -> Path:
     print(f"[run_semantex] START input={i}", flush=True)
     input_path = Path(i)
-    output_path = Path(o) if o is not None else default_output_path(input_path)
+    output_path = Path(o) if o is not None else default_jsonl_outpath(input_path, IN_STAGE, OUT_STAGE)
     print(f"Performing semantic extraction on {input_path}...")
     records = read_jsonl(input_path)
     enriched_records = []

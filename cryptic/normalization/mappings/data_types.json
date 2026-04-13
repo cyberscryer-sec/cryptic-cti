@@ -1,0 +1,6 @@
+{
+  "login credentials": "login_credentials",
+  "credit card credentials": "payment_card_data",
+  "cookies": "session_cookies",
+  "email addresses": "email_addresses"
+}

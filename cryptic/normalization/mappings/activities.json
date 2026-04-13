@@ -1,0 +1,6 @@
+{
+  "steal login credentials": "credential_theft",
+  "steal credentials": "credential_theft",
+  "cookie theft": "session_theft",
+  "account takeover": "account_takeover"
+}

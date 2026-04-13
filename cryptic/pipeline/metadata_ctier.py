@@ -3,7 +3,7 @@ import re
 from hashlib import sha256
 import sys
 from datetime import date
-from cryptic.file_utils import write_jsonl
+from cryptic.file_utils import write_jsonl, CORPUS_DIR
 
 
 def detect_format(entry: str) -> str:
@@ -88,7 +88,7 @@ def run_metadata_parser(input_dir: Path, out_file: Path | None = None) -> Path:
     return output_path
 
 def main() -> None:
-    corpus_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("data/corpus/ctier")
+    corpus_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else CORPUS_DIR / "ctier"
     run_metadata_parser(corpus_dir)
 
 if __name__ == "__main__":

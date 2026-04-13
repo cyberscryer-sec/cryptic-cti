@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import Any
 from uuid import uuid4
 
+
 from cryptic.output.out_utils import choose_rep
 from cryptic.output.ctier_ioc_builder import record_to_indicators
 from cryptic.output.cluster_object import Cluster
