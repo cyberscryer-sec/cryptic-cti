@@ -65,11 +65,11 @@ def norm_timestamp(value: str) -> str:
 def dedupe_list(values: list[Any]) -> list[Any]:
     if not isinstance(values, list):
         raise ValueError("Not a list, cannot dedupe")
-        out = []
-        for value in values:
-            if value and value not in out:
-                out.append(value)
-        return out
+    out = []
+    for value in values:
+        if value not in out:
+            out.append(value)
+    return out
 
 def write_ioc_dict_rows(output_obj) -> list[dict]:
     payload = output_obj.payload or {}

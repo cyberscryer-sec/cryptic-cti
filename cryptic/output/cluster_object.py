@@ -10,7 +10,7 @@ from cryptic.output.out_utils import dedupe_list, norm_timestamp, utc_now_iso
 class Cluster:
     id: str
     record_ids: list[str] = field(default_factory=list)
-    source: str 
+    source: str = ""
     first_seen: str = field(default_factory=utc_now_iso)
     last_seen: str = field(default_factory=utc_now_iso)
     languages: list[str] = field(default_factory=list)
@@ -26,6 +26,7 @@ class Cluster:
 
     def __post_init__(self) -> None:
         self.id = self.id.strip()
+        self.source = self.source.strip()
         self.record_ids = dedupe_list([v.strip() for v in self.record_ids if v.strip()])
         self.languages = dedupe_list([v.strip() for v in self.languages if v.strip()])
         self.raw_texts = dedupe_list([v.strip() for v in self.raw_texts if v.strip()])
@@ -57,7 +58,7 @@ class Cluster:
         return deduped
 
     def add_str(self, field_name: str, values: str | list[str]) -> None:
-        allowed = {"malware_or_tools", "activities", "credential_data_types", "platforms", "record_ids", "languages", "raw_texts", "notes", "source"}
+        allowed = {"malware_or_tools", "activities", "credential_data_types", "platforms", "record_ids", "languages", "raw_texts", "notes"}
         if field_name not in allowed:
             raise ValueError(f"Invalid field name for string-list add: {field_name}")
         current = getattr(self, field_name)
@@ -79,7 +80,7 @@ class Cluster:
 
     def to_dict(self) -> dict[str, Any]:
         return {
-            "id": self.cluster_id,
+            "id": self.id,
             "record_ids": self.record_ids,
             "source": self.source,
             "first_seen": self.first_seen,

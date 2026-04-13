@@ -15,9 +15,10 @@ def create_cluster(record: dict[str, Any]) -> Cluster:
     if not record_id:
         raise ValueError("Record must have a non-empty id")
     source = str(record.get("source", "")).strip()
+    print(f"Creating new cluster with record ID {record_id}")
     cluster = Cluster(id=f"clu_{str(uuid4())[:6]}_{source.strip().lower()}", record_ids=[record_id])
     if source:
-        cluster.add_str("source", source)
+        cluster.source = source
     lang = str(record.get("spacy", {}).get("lang", "")).strip()
     if lang:
         cluster.add_str("languages", lang)
@@ -32,8 +33,12 @@ def create_cluster(record: dict[str, Any]) -> Cluster:
     return cluster
 
 def merge_into_cluster(cluster: Cluster, record: dict[str, Any]) -> None:
+    record_source = str(record.get("source", "")).strip()
+    if cluster.source and record_source and cluster.source != record_source:
+        raise ValueError(f"Cannot merge record from source {record_source!r} into cluster with source {cluster.source!r}")
+    if not cluster.source and record_source:
+        cluster.source = record_source
     cluster.add_str("record_ids", str(record.get("id", "")))
-    cluster.add_str("source", str(record.get("source", "")))
     cluster.add_str("languages", str(record.get("spacy", {}).get("lang", "")))
     cluster.add_str("raw_texts", str(record.get("raw_text", "")))
     cluster.add_str("malware_or_tools", record.get("n_malware_or_tools", []))
