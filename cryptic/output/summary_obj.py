@@ -34,3 +34,18 @@ class Summary:
             if value not in out:
                 out.append(value)
         setattr(self, fieldname, out)
+
+    def __post_init__(self) -> None:
+        self.cluster_id = self.cluster_id.strip()
+        self.source = self.source.strip()
+        self.summary_text = self.summary_text.strip()
+        self.representative_text = self.representative_text.strip()
+        self.record_ids = list(dict.fromkeys(v.strip() for v in self.record_ids if v.strip()))
+        self.lang = list(dict.fromkeys(v.strip() for v in self.languages if v.strip()))
+        self.malware_or_tools = list(dict.fromkeys(v.strip() for v in self.malware_or_tools if v.strip()))
+        self.activities = list(dict.fromkeys(v.strip() for v in self.activities if v.strip()))
+        self.credential_data_types = list(dict.fromkeys(v.strip() for v in self.credential_data_types if v.strip()))
+        self.platforms = list(dict.fromkeys(v.strip() for v in self.platforms if v.strip()))
+        self.gaps = list(dict.fromkeys(v.strip() for v in self.gaps if v.strip()))
+        if self.confidence is not None and not (0 <= self.confidence <= 100):
+            raise ValueError("confidence must be between 0 and 100")
