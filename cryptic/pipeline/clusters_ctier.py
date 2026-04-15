@@ -1,7 +1,7 @@
 from pathlib import Path
 import sys
 from cryptic.file_utils import default_jsonl_outpath, latest_matching_file, read_jsonl, write_jsonl, PROCESSED_DIR
-from cryptic.output.clustering import build_clusters
+from cryptic.output.cluster_build import build_clusters
 
 
 IN_STAGE = "ctier_normalized"

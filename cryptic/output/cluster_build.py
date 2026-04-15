@@ -3,8 +3,9 @@ from typing import Any
 from uuid import uuid4
 
 from cryptic.output.out_utils import choose_rep, clean_cluster_entities
-from cryptic.output.ctier_ioc_builder import record_to_indicators
+from cryptic.output.ctier_ioc_build import record_to_indicators
 from cryptic.output.cluster_obj import Cluster
+from cryptic.output.scoring_utils import compute_cluster_confidence
 
 
 ALLOWED_ENTITY_FIELDS = {"n_malware_or_tools", "n_activity", "n_credential_or_data_types", "n_apps"}
@@ -95,4 +96,5 @@ def build_clusters(records: list[dict[str, Any]]) -> list[Cluster]:
         members = cluster_records[cluster.id]
         clean_cluster_entities(cluster, members)
         cluster.representative_text = choose_rep(members)
+        cluster.confidence = compute_cluster_confidence(cluster, members)
     return clusters

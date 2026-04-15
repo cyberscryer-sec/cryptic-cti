@@ -1,18 +1,29 @@
 from __future__ import annotations
+from typing import Any
 from cryptic.output.out_utils import dedupe_list
 from cryptic.output.output_obj import Output
 from cryptic.output.indicator_obj import Indicator
+from cryptic.output.scoring_utils import normed_val_confidence
+
+
+def _meta_score(normed_meta: dict[str, dict[str, dict[str, Any]]], field_name: str, normed_value: str) -> int | None:
+    field_meta = normed_meta.get(field_name, {})
+    value_meta = field_meta.get(normed_value, {})
+    best_score = value_meta.get("best_score")
+    support_count = len(value_meta.get("supports", []))
+    return normed_val_confidence(best_score, support_count)
+
 
 def record_to_indicators(record: dict) -> list[Indicator]:
     source_id = record.get("id", "")
     iocs = []
-    confidence = None
+    normed_meta = record.get("normed_meta", {})
     for val in record.get("n_malware_or_tools", []):
         iocs.append(Indicator(
             type="malware_or_tool",
             value=val,
             sourced_from=source_id,
-            confidence=confidence,
+            confidence=_meta_score(normed_meta, "n_malware_or_tools", val),
             tags = ["normalized", "ctier", "malware", "tool"],
         ))
     for val in record.get("n_apps", []):
@@ -20,7 +31,7 @@ def record_to_indicators(record: dict) -> list[Indicator]:
             type="platform_or_app",
             value=val,
             sourced_from=source_id,
-            confidence=confidence,
+            confidence=_meta_score(normed_meta, "n_apps", val),
             tags = ["normalized", "ctier", "platform", "app"],
         ))
     for val in record.get("n_activity", []):
@@ -28,7 +39,7 @@ def record_to_indicators(record: dict) -> list[Indicator]:
             type="activity",
             value=val,
             sourced_from=source_id,
-            confidence=confidence,
+            confidence=_meta_score(normed_meta, "n_activity", val),
             tags = ["normalized", "ctier", "activity"],
         ))
     for val in record.get("n_credential_or_data_types", []):
@@ -36,16 +47,18 @@ def record_to_indicators(record: dict) -> list[Indicator]:
             type="credential_or_data_type",
             value=val,
             sourced_from=source_id,
-            confidence=confidence,
+            confidence=_meta_score(normed_meta, "n_credential_or_data_types", val),
             tags = ["normalized", "ctier", "credential", "data"],
         ))
     return iocs
+
 
 def records_to_indicators(records: list[dict]) -> list[Indicator]:
     out = []
     for record in records:
         out.extend(record_to_indicators(record))
     return dedupe_list(out)
+
 
 def create_indicator_list(indicators: list[Indicator]) -> Output:
     if not indicators:

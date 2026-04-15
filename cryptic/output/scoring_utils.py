@@ -41,6 +41,16 @@ def weighted_sum(components: dict[str, tuple[float, float]]) -> float:
     return clamp_score(score)
 
 
+def normed_val_confidence(best_score: float | None, support_count: int, cap: int = 3) -> int | None:
+    if best_score is None and support_count <= 0:
+        return None
+    best = clamp_score(best_score if best_score is not None else 0.0)
+    corroboration = capped_ratio(support_count, cap)
+    # confidence is 70/30 composite of the highest extraction score and how often this candidate was extracted
+    score = weighted_sum({"best_score": (best, 0.7), "corroboration": (corroboration, 0.3)})
+    return to_percent(score)
+
+
 def compute_cluster_confidence(cluster: Cluster, members: list[dict[str, Any]]) -> int | None:
     coverage = coverage_ratio([cluster.malware_or_tools, cluster.activities, cluster.credential_data_types, cluster.platforms])
     record_support = capped_ratio(len(cluster.record_ids), 4)
@@ -59,9 +69,7 @@ def compute_cluster_confidence(cluster: Cluster, members: list[dict[str, Any]]) 
     return to_percent(clamp_score(score))
 
 
-def compute_indicator_confidence(extraction_score: float | None, survived_filtering: bool, corroborating_mentions: int = 1) -> int | None:
-    if extraction_score is None and not survived_filtering:
-        return None
+def compute_indicator_confidence(extraction_score: float | None, corroborating_mentions: int = 1) -> int | None:
     extraction_component = extraction_score if extraction_score is not None else 0.4
     corroboration_component = capped_ratio(corroborating_mentions, 3)
     score = weighted_sum({

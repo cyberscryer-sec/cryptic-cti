@@ -1,7 +1,7 @@
 from __future__ import annotations
 import sys
 from pathlib import Path
-from cryptic.output.ctier_ioc_builder import create_ioc_list, records_iocs
+from cryptic.output.ctier_ioc_build import create_ioc_list, records_iocs
 from cryptic.file_utils import latest_matching_file, default_json_outpath, default_csv_outpath, read_jsonl, outputobj_to_json, PROCESSED_DIR
 from cryptic.output.out_utils import write_ioc_csv
 

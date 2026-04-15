@@ -39,27 +39,38 @@ def normalize_candidates(record: dict) -> dict:
     if not isinstance(candidates, list):
         raise TypeError("gliner_candidates must be a list")
     unmapped = []
-    normalized_fields = {
-        config["output_field"]: []
-        for config in LABEL_CONFIG.values()
-    }
+    normed_fields = {config["output_field"]: [] for config in LABEL_CONFIG.values()}
+    normed_meta = {config["output_field"]: {} for config in LABEL_CONFIG.values()}
     for item in candidates:
         text = (item.get("text") or "").strip()
         label = normalize_key(item.get("label") or "")
+        raw_score = item.get("score")
         if not text:
             continue
         config = LABEL_CONFIG.get(label)
         if not config:
             continue
         normalized, matched = normalize_value(text, config["mapping"])
-        normalized_fields[config["output_field"]].append(normalized)
+        out_field = config["output_field"]
+        normed_fields[out_field].append(normalized)
+        score = float(raw_score) if raw_score is not None else None
+        current = normed_meta[out_field].get(normalized)
+        support= {"raw_text": text, "raw_label": label, "score": score}
+        if current is None:
+            normed_meta[out_field][normalized] = {"best_score": score, "supports": [support]}
+        else:
+            current["supports"].append(support)
+            current_best = current.get("best_score")
+            if score is not None and (current_best is None or score > current_best):
+                current["best_score"] = score
         if not matched:
             unmapped.append((label, text))
     enriched = dict(record)
-    for field, values in normalized_fields.items():
+    for field, values in normed_fields.items():
         enriched[field] = dedupe_preserve_order(values)
     enriched["unmapped"] = dedupe_preserve_order(unmapped)
     enriched["norm_status"] = "normalized"
+    enriched["meta"] = normed_meta
     return enriched
 
 
