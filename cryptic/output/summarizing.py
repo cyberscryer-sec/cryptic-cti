@@ -1,9 +1,12 @@
 from __future__ import annotations
-from typing import Any
+import re
+import torch
+from pathlib import Path
+from transformers import AutoModelForCausalLM, AutoTokenizer
 from cryptic.output.output_obj import Output
 from cryptic.output.summary_obj import Summary
 from cryptic.output.cluster_obj import Cluster
-from cryptic.file_utils import read_jsonl
+
 
 def top_values(values: list[str], limit: int = 3) -> list[str]:
     return [v for v in values if isinstance(v, str) and v.strip()][:limit]
@@ -104,3 +107,85 @@ def summary_to_output(summary: Summary) -> Output:
         tags=deduped_tags,
         payload=payload,
     )
+
+MODEL_NAME = "Qwen/Qwen2.5-3B-Instruct"
+MAX_INPUT_CHARS = 6000
+MAX_NEW_TOKENS = 140
+TEMPERATURE = 0.3
+TOP_P = 0.9
+DO_SAMPLE = False
+
+def clean_source_text(text: str) -> str:
+    text = text.replace("\u0000", " ")
+    text = re.sub(r"[ \t]+", " ", text)
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    return text.strip()
+
+def truncate_for_prompt(text: str, max_chars: int) -> str:
+    if len(text) <= max_chars:
+        return text
+    return text[:max_chars].rstrip() + "\n\n[TRUNCATED]"
+
+
+def postprocess_summary(text: str) -> str: # strip model junk
+    text = text.strip()
+    prefixes = ["summary:", "analyst summary:", "concise summary:", "here is the summary:"]
+    lowered = text.lower()
+    for prefix in prefixes:
+        if lowered.startswith(prefix):
+            text = text[len(prefix):].strip()
+            break
+    text = re.sub(r"\s+", " ", text).strip()
+    # Optional: clamp to first 4 sentences if model rambles.
+    sentences = re.split(r"(?<=[.!?])\s+", text)
+    if len(sentences) > 4:
+        text = " ".join(sentences[:4]).strip()
+    return text
+
+PROMPT_PATH = Path(__file__).with_name("summary_prompt.txt")
+SUMMARY_SYSTEM_PROMPT = PROMPT_PATH.read_text(encoding="utf-8").strip()
+
+def load_summary_model(model_name: str = MODEL_NAME):
+    tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+    model = AutoModelForCausalLM.from_pretrained(
+        model_name,
+        torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
+        device_map="auto",
+        trust_remote_code=True,
+    )
+    return tokenizer, model
+
+
+def build_summary_messages(source_text: str) -> list[dict[str, str]]:
+    return [
+        {"role": "system", "content": SUMMARY_SYSTEM_PROMPT},
+        {"role": "user", "content": f"Source text:\n{source_text}\n\nWrite the summary now."}]
+
+
+def generate_summary_text(
+    source_text: str,
+    tokenizer,
+    model,
+    max_input_chars: int = MAX_INPUT_CHARS,
+    max_new_tokens: int = MAX_NEW_TOKENS,
+    temperature: float = TEMPERATURE,
+    top_p: float = TOP_P,
+    do_sample: bool = DO_SAMPLE,
+) -> str:
+    cleaned = clean_source_text(source_text)
+    truncated = truncate_for_prompt(cleaned, max_input_chars=max_input_chars)
+    messages = build_summary_messages(truncated)
+    prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+    model_inputs = tokenizer([prompt], return_tensors="pt").to(model.device)
+    with torch.no_grad():
+        output_ids = model.generate(
+            **model_inputs,
+            max_new_tokens=max_new_tokens,
+            temperature=temperature,
+            top_p=top_p,
+            do_sample=do_sample,
+            pad_token_id=tokenizer.eos_token_id,
+        )
+    generated_ids = output_ids[0][len(model_inputs.input_ids[0]):]
+    raw_output = tokenizer.decode(generated_ids, skip_special_tokens=True)
+    return postprocess_summary(raw_output)
