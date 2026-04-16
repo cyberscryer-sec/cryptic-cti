@@ -1,9 +1,10 @@
 from datetime import datetime, timezone
 from typing import Any
+from collections import Counter
 import csv
 from pathlib import Path
-
 from cryptic.output.cluster_obj import Cluster
+import re
 
 
 JUNK_CANDIDATES = {"mw", "is", "n"}
@@ -48,6 +49,12 @@ def choose_rep(records: list[dict[str, Any]]) -> str:
     return best_text
 
 
+def top_values(values: list[str], limit: int = 5) -> list[str]:
+    counter = Counter(v.strip() for v in values if isinstance(v, str) and v.strip())
+    ranked = sorted(counter.items(), key=lambda x: (x[1], x[0].casefold()))
+    return [value for value, _count in ranked[:limit]]
+
+
 def norm_fieldname(field_name: str) -> str:
     return field_name.strip().lower()
 
@@ -65,6 +72,7 @@ def norm_timestamp(value: str) -> str:
         dt = dt.astimezone(timezone.utc)
     return dt.isoformat()
 
+
 def dedupe_list(values: list[Any]) -> list[Any]:
     if not isinstance(values, list):
         raise ValueError("Not a list, cannot dedupe")
@@ -73,6 +81,7 @@ def dedupe_list(values: list[Any]) -> list[Any]:
         if value not in out:
             out.append(value)
     return out
+
 
 def write_ioc_dict_rows(output_obj) -> list[dict]:
     payload = output_obj.payload or {}
@@ -95,26 +104,12 @@ def write_ioc_dict_rows(output_obj) -> list[dict]:
     return rows
 
 
-def write_ioc_csv(output_obj, output_path: Path | str) -> Path:
-    output_path = Path(output_path)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    rows = write_ioc_dict_rows(output_obj)
-    fieldnames = [
-        "indicator_type",
-        "value",
-        "sourced_from",
-        "confidence",
-        "tags",
-        "first_seen",
-        "last_seen",
-        "valid_til",
-        "is_detection_ioc",
-    ]
-    with output_path.open("w", encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(rows)
-    return output_path
+def clean_text(text: str) -> str:
+    clean = text.replace("\u0000", " ")
+    clean = re.sub(r"\r\n?", "\n", clean)
+    clean = re.sub(r"[ \t]+", " ", clean)
+    clean = re.sub(r"\n{3,}", "\n\n", clean)
+    return clean.strip()
 
 
 def clean_cluster_entities(cluster: Cluster, members: list[dict[str, Any]]) -> None:
@@ -141,3 +136,5 @@ def clean_cluster_entities(cluster: Cluster, members: list[dict[str, Any]]) -> N
     cluster.activities = [v for v in cluster.activities if v.strip() and v.strip().casefold() in allowed_activities]
     cluster.credential_data_types = [v for v in cluster.credential_data_types if v.strip() and v.strip().casefold() in allowed_credential_data_types]
     cluster.platforms = [v for v in cluster.platforms if v.strip() and v.strip().casefold() in allowed_platforms]
+
+

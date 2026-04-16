@@ -1,6 +1,6 @@
 from pathlib import Path
 import json
-from cryptic.output.output_objects import Output
+from cryptic.output.output_obj import Output
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -64,11 +64,4 @@ def load_json(path: Path) -> dict:
     with path.open("r", encoding="utf-8") as f:
         return json.load(f)
     
-
-def outputobj_to_json(output_obj: Output, output_path: Path | str) -> Path:
-    output_path = Path(output_path)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    with output_path.open("w", encoding="utf-8") as f:
-        json.dump(output_obj.to_dict(), f, ensure_ascii=False, indent=2)
-    return output_path
 

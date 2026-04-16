@@ -7,7 +7,7 @@ from cryptic.output.out_utils import dedupe_list, norm_fieldname, norm_timestamp
 class Indicator:
     type: str
     value: str
-    sourced_from: str
+    source_id: str
     confidence: int | None = None
     tags: list[str] = field(default_factory=list)
     first_seen: str = field(default_factory=utc_now_iso)
@@ -19,7 +19,7 @@ class Indicator:
         self.type = norm_fieldname(self.type)
         self.value = self.value.strip()
         self.tags = self.dedupe("tags")
-        self.sourced_from = self.sourced_from.strip()
+        self.source_id = self.source_id.strip()
         self.first_seen = norm_timestamp(self.first_seen)
         self.last_seen = norm_timestamp(self.last_seen)
         if self.valid_til is not None:

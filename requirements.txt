@@ -3,3 +3,5 @@ spacy
 gliner
 setfit
 sentence-transformers
+torch
+transformers

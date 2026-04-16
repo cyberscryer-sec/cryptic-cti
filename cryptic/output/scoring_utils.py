@@ -46,9 +46,17 @@ def normed_val_confidence(best_score: float | None, support_count: int, cap: int
         return None
     best = clamp_score(best_score if best_score is not None else 0.0)
     corroboration = capped_ratio(support_count, cap)
-    # confidence is 70/30 composite of the highest extraction score and how often this candidate was extracted
+    # confidence is 70/30 composite of the highest extraction score and how often this candidate was extracted within the record
     score = weighted_sum({"best_score": (best, 0.7), "corroboration": (corroboration, 0.3)})
     return to_percent(score)
+
+
+def meta_score(normed_meta: dict[str, dict[str, dict[str, Any]]], field_name: str, normed_value: str) -> int | None:
+    field_meta = normed_meta.get(field_name, {})
+    value_meta = field_meta.get(normed_value, {})
+    best_score = value_meta.get("best_score")
+    support_count = len(value_meta.get("supports", []))
+    return normed_val_confidence(best_score, support_count)
 
 
 def compute_cluster_confidence(cluster: Cluster, members: list[dict[str, Any]]) -> int | None:
@@ -66,14 +74,4 @@ def compute_cluster_confidence(cluster: Cluster, members: list[dict[str, Any]]) 
         return None
     # total score is a weighted sum of coverage(how many types of entities), support(how many records and indicators), and survival ratio of candidates
     score = weighted_sum({"coverage": (coverage, 0.45), "support": (support, 0.35), "candidate_quality": (candidate_quality, 0.20)})
-    return to_percent(clamp_score(score))
-
-
-def compute_indicator_confidence(extraction_score: float | None, corroborating_mentions: int = 1) -> int | None:
-    extraction_component = extraction_score if extraction_score is not None else 0.4
-    corroboration_component = capped_ratio(corroborating_mentions, 3)
-    score = weighted_sum({
-        "extraction": (extraction_component, 0.7),
-        "corroboration": (corroboration_component, 0.3),
-    })
     return to_percent(clamp_score(score))

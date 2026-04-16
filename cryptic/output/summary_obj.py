@@ -2,7 +2,6 @@ from __future__ import annotations
 from dataclasses import dataclass, field, asdict
 from typing import Any
 
-from sqlalchemy import values
 
 @dataclass(slots=True)
 class Summary:
@@ -38,10 +37,10 @@ class Summary:
     def __post_init__(self) -> None:
         self.cluster_id = self.cluster_id.strip()
         self.source = self.source.strip()
-        self.summary_text = self.summary_text.strip()
+        self.text = self.summary_text.strip()
         self.representative_text = self.representative_text.strip()
         self.record_ids = list(dict.fromkeys(v.strip() for v in self.record_ids if v.strip()))
-        self.lang = list(dict.fromkeys(v.strip() for v in self.languages if v.strip()))
+        self.lang = list(dict.fromkeys(v.strip() for v in self.lang if v.strip()))
         self.malware_or_tools = list(dict.fromkeys(v.strip() for v in self.malware_or_tools if v.strip()))
         self.activities = list(dict.fromkeys(v.strip() for v in self.activities if v.strip()))
         self.credential_data_types = list(dict.fromkeys(v.strip() for v in self.credential_data_types if v.strip()))
