@@ -65,3 +65,5 @@ def load_json(path: Path) -> dict:
         return json.load(f)
     
 
+def write_text(path: Path | str, text: str, encoding: str = "utf-8") -> None:
+    Path(path).write_text(text, encoding=encoding)
