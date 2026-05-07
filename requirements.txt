@@ -5,3 +5,4 @@ setfit
 sentence-transformers
 torch
 transformers
+ruff

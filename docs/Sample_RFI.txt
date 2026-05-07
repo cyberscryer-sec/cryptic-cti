@@ -1,0 +1,36 @@
+Sample RFI
+
+RFI ID: RFI-001
+Title: Multilingual collection support for credential-theft ecosystem monitoring
+Priority: High
+Requested by: Threat Intelligence / Collections Support
+Date required: 72 hours from tasking
+Languages: English, Simplified Chinese, Traditional Chinese
+Time window: Previous 30 days
+Source scope: Lawful public and simulated closed-source-style text datasets used for collection support testing
+
+Primary requirement
+Identify and normalize English- and Chinese-language mentions relevant to the credential-theft ecosystem, with emphasis on infostealer tooling, stealer-log sales, actor handles, and associated infrastructure clues that may support further collection or analytic follow-up.
+
+Why this request matters
+Credential theft and dark-web exposure of compromised information remain a practical intelligence target because they can indicate active criminal monetization, access-broker activity, and downstream intrusion risk. CrowdStrike’s public material explicitly ties dark web monitoring to leaked credentials, stolen information, and malicious sharing and sale activity, which makes this a credible collection-support scenario.
+
+Specific information requirements
+
+What English- or Chinese-language references to infostealer malware families or “logs” sales appear in the scoped dataset?
+Which actor handles, aliases, or seller identifiers appear repeatedly across relevant items?
+Are there observable language variants, slang terms, or alternate spellings that should be normalized to the same entity or activity type?
+Are there domains, URLs, wallets, contact methods, or platform references that should be captured as supporting infrastructure clues?
+Which leads appear most relevant for follow-up collection, and which appear low-confidence, duplicated, or spam-like?
+
+Desired output
+Provide a short collection-response memo containing:
+
+a one-paragraph executive summary,
+a normalized entity table,
+notable alias/variant mappings across English and Chinese,
+source/relevance notes,
+and recommended next collection steps or intelligence gaps.
+
+Assumptions / Caveats
+This request is for collection support and lead normalization, not final attribution. Analyst judgment is required to distinguish original reporting from recycled, spammed, or low-credibility content. That distinction matters because closed-source monitoring often produces high volume and repeated noise, and operational value comes from filtering that noise into useful finished outputs

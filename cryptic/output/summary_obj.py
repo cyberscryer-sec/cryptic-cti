@@ -7,6 +7,7 @@ from typing import Any
 class Summary:
     cluster_id: str
     text: str
+    method: str
     record_ids: list[str]
     source: str
     lang: list[str]
@@ -38,6 +39,7 @@ class Summary:
         self.cluster_id = self.cluster_id.strip()
         self.source = self.source.strip()
         self.text = self.summary_text.strip()
+        self.method = self.method.strip()
         self.representative_text = self.representative_text.strip()
         self.record_ids = list(dict.fromkeys(v.strip() for v in self.record_ids if v.strip()))
         self.lang = list(dict.fromkeys(v.strip() for v in self.lang if v.strip()))
