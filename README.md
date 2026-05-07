@@ -2,7 +2,7 @@
 
 A compact cyber threat collections-support project focused on transforming noisy multilingual cybercrime leads into structured, analyst-usable outputs.
 
-## Overview
+### Overview
 
 `cryptic-cti` is a Python-based workflow that demonstrates how messy English- and Chinese-language reporting related to credential theft, infostealers, malware tooling, and cybercrime ecosystem activity can be normalized, clustered, enriched, and converted into analyst-oriented outputs.
 
@@ -22,7 +22,7 @@ The workflow emphasizes practical CTI engineering concepts including data normal
 
 ---
 
-# Current Capabilities
+## Current Capabilities
 
 * Multilingual normalization (English + Chinese)
 * Entity extraction and canonicalization
@@ -36,7 +36,7 @@ The workflow emphasizes practical CTI engineering concepts including data normal
 
 ---
 
-# Design Goals
+## Design Goals
 
 This project intentionally prioritizes:
 
@@ -50,7 +50,7 @@ The goal is not to automate intelligence analysis end-to-end, but to reduce nois
 
 ---
 
-# Pipeline Stages
+## Pipeline Stages
 
 The workflow currently consists of four primary stages:
 
@@ -70,7 +70,7 @@ After normalization, the workflow supports multiple export paths for generating 
 
 ---
 
-# Technologies Used
+## Technologies Used
 
 * Python
 * Pydantic
@@ -81,22 +81,22 @@ After normalization, the workflow supports multiple export paths for generating 
 
 ---
 
-# Running the Project
+## Running the Project
 
-## Clone the repository
+### Clone the repository
 
 ```bash
 git clone https://github.com/<your-username>/cryptic-cti.git
 cd cryptic-cti
 ```
 
-## Install dependencies
+### Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Run the workflow
+### Run the workflow
 
 ```bash
 python main.py
@@ -105,7 +105,7 @@ python main.py
 ---
 
 
-# Current Scope
+## Current Scope
 
 This repository is currently focused on:
 
@@ -118,7 +118,7 @@ The project uses lawful sample data and synthetic examples for demonstration pur
 
 ---
 
-# Roadmap
+## Roadmap
 
 Planned future improvements include:
 
@@ -133,7 +133,7 @@ Planned future improvements include:
 
 ---
 
-# Disclaimer
+## Disclaimer
 
 This project is intended for educational, research, and portfolio purposes only.
 
@@ -143,6 +143,6 @@ All examples are either synthetic, sanitized, or derived from lawful open-source
 
 ---
 
-# License
+## License
 
 MIT License
