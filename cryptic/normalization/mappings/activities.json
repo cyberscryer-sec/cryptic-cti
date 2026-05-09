@@ -1,6 +1,208 @@
 {
-  "steal login credentials": "credential_theft",
-  "steal credentials": "credential_theft",
-  "cookie theft": "session_theft",
-  "account takeover": "account_takeover"
+  "credential_theft": {
+    "variants": [
+      "steal login credentials",
+      "steal credentials",
+      "credential harvesting",
+      "credential stealing",
+      "credential grabber",
+      "password theft",
+      "password stealing",
+      "账号盗取",
+      "窃取凭证",
+      "窃取账号",
+      "盗号",
+      "凭证窃取"
+    ],
+    "category": "activity"
+  },
+
+  "session_theft": {
+    "variants": [
+      "cookie theft",
+      "cookie stealing",
+      "session hijacking",
+      "session theft",
+      "browser session theft",
+      "cookie grabber",
+      "cookie窃取",
+      "会话劫持",
+      "窃取cookie",
+      "浏览器会话盗取"
+    ],
+    "category": "activity"
+  },
+
+  "phishing": {
+    "variants": [
+      "phishing",
+      "phish",
+      "credential phishing",
+      "email phishing",
+      "sms phishing",
+      "smishing",
+      "phishing campaign",
+      "fake login page",
+      "credential harvesting page",
+      "login lure",
+      "钓鱼",
+      "钓鱼攻击",
+      "账号钓鱼",
+      "短信钓鱼",
+      "鱼叉钓鱼",
+      "仿冒登录页",
+      "钓鱼页面"
+    ],
+    "category": "activity"
+  },
+
+  "account_takeover": {
+    "variants": [
+      "account takeover",
+      "ato",
+      "take over accounts",
+      "compromised accounts",
+      "hijacked accounts",
+      "账号接管",
+      "账户接管",
+      "账号劫持",
+      "账户劫持",
+      "盗号"
+    ],
+    "category": "activity"
+  },
+
+  "malware_delivery": {
+    "variants": [
+      "malware delivery",
+      "payload delivery",
+      "dropper activity",
+      "malware distribution",
+      "deliver malware",
+      "spread malware",
+      "loader activity",
+      "恶意软件投递",
+      "木马投递",
+      "恶意载荷投递",
+      "病毒传播"
+    ],
+    "category": "activity"
+  },
+
+  "credential_sale": {
+    "variants": [
+      "selling credentials",
+      "credential sale",
+      "credentials for sale",
+      "account marketplace",
+      "stolen credentials",
+      "premium accounts",
+      "账号出售",
+      "出售账号",
+      "出售凭证",
+      "贩卖账号",
+      "账号交易"
+    ],
+    "category": "activity"
+  },
+
+  "log_sale": {
+    "variants": [
+      "log sale",
+      "logs for sale",
+      "selling logs",
+      "browser logs",
+      "stealer logs",
+      "fresh logs",
+      "出售日志",
+      "日志出售",
+      "贩卖日志",
+      "浏览器日志",
+      "窃取日志"
+    ],
+    "category": "activity"
+  },
+
+  "initial_access_sale": {
+    "variants": [
+      "initial access",
+      "initial access sale",
+      "network access sale",
+      "rdp access",
+      "vpn access",
+      "shell access",
+      "corporate access",
+      "foothold sale",
+      "出售权限",
+      "出售初始权限",
+      "网络权限出售",
+      "企业权限",
+      "远程桌面权限",
+      "vpn权限"
+    ],
+    "category": "activity"
+  },
+
+  "data_leak": {
+    "variants": [
+      "data leak",
+      "data breach",
+      "database leak",
+      "leaked database",
+      "dumping data",
+      "exposed database",
+      "数据泄露",
+      "数据库泄露",
+      "数据外泄",
+      "泄漏数据",
+      "出售数据库"
+    ],
+    "category": "activity"
+  },
+
+  "malware_development": {
+    "variants": [
+      "develop malware",
+      "malware development",
+      "build stealer",
+      "writing malware",
+      "trojan development",
+      "crypter development",
+      "开发木马",
+      "恶意软件开发",
+      "编写木马",
+      "病毒开发",
+      "免杀开发"
+    ],
+    "category": "activity"
+  },
+
+  "remote_access": {
+    "variants": [
+      "remote access",
+      "remote control",
+      "rat access",
+      "backdoor access",
+      "远程控制",
+      "远程访问",
+      "木马控制",
+      "后门访问"
+    ],
+    "category": "activity"
+  },
+
+  "spam_distribution": {
+    "variants": [
+      "spam campaign",
+      "bulk emailing",
+      "mass mailing",
+      "spam sending",
+      "sending spam",
+      "垃圾邮件",
+      "垃圾邮件发送",
+      "群发邮件",
+      "邮件轰炸"
+    ],
+    "category": "activity"
+  }
 }
