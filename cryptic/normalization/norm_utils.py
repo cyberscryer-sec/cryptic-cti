@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+
 def normalize_key(value: str) -> str:
     return " ".join(value.strip().lower().split())
 

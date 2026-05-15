@@ -1,10 +1,8 @@
-from datetime import datetime, timezone
 from typing import Any
 from collections import Counter
-import csv
-from pathlib import Path
 from cryptic.output.cluster_obj import Cluster
 import re
+from datetime import datetime, timezone
 
 
 JUNK_CANDIDATES = {"mw", "is", "n"}
@@ -54,23 +52,6 @@ def top_values(values: list[str], limit: int = 5) -> list[str]:
     ranked = sorted(counter.items(), key=lambda x: (x[1], x[0].casefold()))
     return [value for value, _count in ranked[:limit]]
 
-
-def norm_fieldname(field_name: str) -> str:
-    return field_name.strip().lower()
-
-
-def utc_now_iso() -> str:
-    return datetime.now(timezone.utc).isoformat()
-
-
-def norm_timestamp(value: str) -> str:
-    value = value.strip().replace("Z", "+00:00")
-    dt = datetime.fromisoformat(value)
-    if dt.tzinfo is None:
-        dt = dt.replace(tzinfo=timezone.utc)
-    else:
-        dt = dt.astimezone(timezone.utc)
-    return dt.isoformat()
 
 
 def dedupe_list(values: list[Any]) -> list[Any]:
@@ -138,3 +119,15 @@ def clean_cluster_entities(cluster: Cluster, members: list[dict[str, Any]]) -> N
     cluster.platforms = [v for v in cluster.platforms if v.strip() and v.strip().casefold() in allowed_platforms]
 
 
+def norm_fieldname(field_name: str) -> str:
+    return field_name.strip().lower()
+
+
+def norm_timestamp(value: str) -> str:
+    value = value.strip().replace("Z", "+00:00")
+    dt = datetime.fromisoformat(value)
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    else:
+        dt = dt.astimezone(timezone.utc)
+    return dt.isoformat()

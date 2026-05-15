@@ -1,6 +1,6 @@
 from __future__ import annotations
 from cryptic.output.output_obj import Output
-from cryptic.output.out_utils import utc_now_iso
+from cryptic.file_utils import utc_now_iso
 
 
 DEFAULT_TITLE = "CTI Collections Report"

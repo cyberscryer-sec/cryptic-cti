@@ -3,7 +3,7 @@ from collections.abc import Callable
 from cryptic.output.output_obj import Output
 from cryptic.output.summary_obj import Summary
 from cryptic.output.cluster_obj import Cluster
-from cryptic.output.llm_text_utils import det_summary_text, llm_summary_text
+from cryptic.output.llm_text_utils import det_summary_text
 
 
 def builder_selection(cluster: Cluster, llm_builder: Callable[[Cluster], str] | None = None,) -> Callable[[Cluster], str]:

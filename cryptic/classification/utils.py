@@ -1,8 +1,11 @@
 from __future__ import annotations
 from pathlib import Path
-from setfit import SetFitModel
+from sentence_transformers import SentenceTransformer
 
-def load_model(model_dir: Path) -> SetFitModel:
-    if not model_dir.exists():
-        raise FileNotFoundError(f"SetFit model directory not found in: {model_dir}")
-    return SetFitModel.from_pretrained(str(model_dir), tokenizer_kwargs={"fix_mistral_regex": True})
+MODEL_NAME = "paraphrase-multilingual-MiniLM-L12-v2"
+model = SentenceTransformer(MODEL_NAME)
+
+
+def embed_texts(texts: list[str]):
+    return model.encode(texts)
+

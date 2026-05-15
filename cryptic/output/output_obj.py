@@ -4,8 +4,8 @@ from dataclasses import asdict, dataclass, field
 from typing import Any
 from uuid import uuid4
 
-from cryptic.output.out_utils import norm_fieldname, utc_now_iso, dedupe_list
-
+from cryptic.output.out_utils import norm_fieldname, dedupe_list
+from cryptic.file_utils import utc_now_iso
 
 @dataclass(slots=True)
 class Relationship:

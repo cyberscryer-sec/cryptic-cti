@@ -13,7 +13,7 @@ def record_to_indicators(record: dict) -> list[Indicator]:
         iocs.append(Indicator(
             type="malware_or_tool",
             value=val,
-            sourced_from=source_id,
+            source_id=source_id,
             confidence=meta_score(normed_meta, "n_malware_or_tools", val),
             tags = ["normalized", "ctier", "malware", "tool"],
         ))
@@ -21,7 +21,7 @@ def record_to_indicators(record: dict) -> list[Indicator]:
         iocs.append(Indicator(
             type="platform_or_app",
             value=val,
-            sourced_from=source_id,
+            source_id=source_id,
             confidence=meta_score(normed_meta, "n_apps", val),
             tags = ["normalized", "ctier", "platform", "app"],
         ))
@@ -29,7 +29,7 @@ def record_to_indicators(record: dict) -> list[Indicator]:
         iocs.append(Indicator(
             type="activity",
             value=val,
-            sourced_from=source_id,
+            source_id=source_id,
             confidence=meta_score(normed_meta, "n_activity", val),
             tags = ["normalized", "ctier", "activity"],
         ))
@@ -37,7 +37,7 @@ def record_to_indicators(record: dict) -> list[Indicator]:
         iocs.append(Indicator(
             type="credential_or_data_type",
             value=val,
-            sourced_from=source_id,
+            source_id=source_id,
             confidence=meta_score(normed_meta, "n_credential_or_data_types", val),
             tags = ["normalized", "ctier", "credential", "data"],
         ))
@@ -59,8 +59,7 @@ def create_indicator_list(indicators: list[Indicator]) -> Output:
     return Output(
         type="indicator_list",
         producer="ctier_pipeline",
-        source_ids=[ind.sourced_from for ind in indicators],
+        source_ids=[ind.source_id for ind in indicators],
         tags=["ctier", "normalized", "indicator"],
         confidence=overall_confidence,
-        payload={"indicators": [ind.to_dict() for ind in indicators]},
-    )
+        payload={"indicators": [ind.to_dict() for ind in indicators]})

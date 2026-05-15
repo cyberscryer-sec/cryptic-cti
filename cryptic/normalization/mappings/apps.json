@@ -1,6 +1,137 @@
 {
-  "chrome": "Chrome",
-  "firefox": "Firefox",
-  "telegram": "Telegram",
-  "cash app": "Cash App"
+  "Telegram": {
+    "variants": [
+      "telegram",
+      "tg",
+      "电报"
+    ],
+    "category": "platform"
+  },
+
+  "Discord": {
+    "variants": [
+      "discord",
+      "dc"
+    ],
+    "category": "platform"
+  },
+
+  "Steam": {
+    "variants": [
+      "steam",
+      "steam account",
+      "steam账号"
+    ],
+    "category": "platform"
+  },
+
+  "PayPal": {
+    "variants": [
+      "paypal",
+      "pp"
+    ],
+    "category": "platform"
+  },
+
+  "Binance": {
+    "variants": [
+      "binance",
+      "币安"
+    ],
+    "category": "platform"
+  },
+
+  "Coinbase": {
+    "variants": [
+      "coinbase"
+    ],
+    "category": "platform"
+  },
+
+  "Outlook": {
+    "variants": [
+      "outlook",
+      "hotmail",
+      "微软邮箱"
+    ],
+    "category": "platform"
+  },
+
+  "Gmail": {
+    "variants": [
+      "gmail",
+      "google mail",
+      "谷歌邮箱"
+    ],
+    "category": "platform"
+  },
+
+  "Facebook": {
+    "variants": [
+      "facebook",
+      "fb",
+      "脸书"
+    ],
+    "category": "platform"
+  },
+
+  "Instagram": {
+    "variants": [
+      "instagram",
+      "ig"
+    ],
+    "category": "platform"
+  },
+
+  "TikTok": {
+    "variants": [
+      "tiktok",
+      "抖音",
+      "tik tok"
+    ],
+    "category": "platform"
+  },
+
+  "WeChat": {
+    "variants": [
+      "wechat",
+      "微信"
+    ],
+    "category": "platform"
+  },
+
+  "QQ": {
+    "variants": [
+      "qq",
+      "腾讯qq"
+    ],
+    "category": "platform"
+  },
+
+  "Windows": {
+    "variants": [
+      "windows",
+      "win10",
+      "win11",
+      "微软系统"
+    ],
+    "category": "platform"
+  },
+
+  "Android": {
+    "variants": [
+      "android",
+      "安卓"
+    ],
+    "category": "platform"
+  },
+
+  "iOS": {
+    "variants": [
+      "ios",
+      "iphone",
+      "苹果手机"
+    ],
+    "category": "platform"
+  }
 }

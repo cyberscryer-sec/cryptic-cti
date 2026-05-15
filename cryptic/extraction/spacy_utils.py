@@ -19,7 +19,7 @@ def detect_lang(text: str) -> str:
         return "zh"
     elif en and not zh:
         return "en"
-    else:
+    elif zh and en:
         return "mixed"
     return "unknown"
 

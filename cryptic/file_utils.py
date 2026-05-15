@@ -1,6 +1,5 @@
 from pathlib import Path
 import json
-from cryptic.output.output_obj import Output
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -19,7 +18,7 @@ def default_jsonl_outpath(input_path: Path, in_stage: str, out_stage: str) -> Pa
     return input_path.with_name(output_name)
 
 
-def default_json_outpath(input_path: Path, in_stage: str, output: Output) -> Path:
+def default_json_outpath(input_path: Path, in_stage: str, output) -> Path:
     if in_stage in input_path.name:
         output_name = input_path.name.replace(in_stage, f"{output.producer}_{output.type}")
     else:

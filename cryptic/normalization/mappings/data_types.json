@@ -1,6 +1,108 @@
 {
-  "login credentials": "login_credentials",
-  "credit card credentials": "payment_card_data",
-  "cookies": "session_cookies",
-  "email addresses": "email_addresses"
+  "credentials": {
+    "variants": [
+      "credentials",
+      "creds",
+      "login credentials",
+      "账号密码",
+      "凭证"
+    ],
+    "category": "data_type"
+  },
+
+  "cookies": {
+    "variants": [
+      "cookies",
+      "browser cookies",
+      "session cookies",
+      "浏览器cookie",
+      "会话cookie"
+    ],
+    "category": "data_type"
+  },
+
+  "browser_logs": {
+    "variants": [
+      "browser logs",
+      "stealer logs",
+      "logs",
+      "日志",
+      "浏览器日志"
+    ],
+    "category": "data_type"
+  },
+
+  "credit_cards": {
+    "variants": [
+      "credit cards",
+      "cc",
+      "card data",
+      "银行卡",
+      "信用卡数据"
+    ],
+    "category": "data_type"
+  },
+
+  "crypto_wallets": {
+    "variants": [
+      "crypto wallets",
+      "wallets",
+      "wallet data",
+      "钱包数据",
+      "加密钱包"
+    ],
+    "category": "data_type"
+  },
+
+  "email_accounts": {
+    "variants": [
+      "email accounts",
+      "mail accounts",
+      "邮箱账号",
+      "电子邮件账户"
+    ],
+    "category": "data_type"
+  },
+
+  "vpn_credentials": {
+    "variants": [
+      "vpn credentials",
+      "vpn accounts",
+      "vpn creds",
+      "vpn账号"
+    ],
+    "category": "data_type"
+  },
+
+  "rdp_credentials": {
+    "variants": [
+      "rdp credentials",
+      "rdp access",
+      "远程桌面凭证",
+      "rdp账号"
+    ],
+    "category": "data_type"
+  },
+
+  "databases": {
+    "variants": [
+      "database",
+      "databases",
+      "db dump",
+      "数据库",
+      "数据库转储"
+    ],
+    "category": "data_type"
+  },
+
+  "personal_information": {
+    "variants": [
+      "personal information",
+      "pii",
+      "identity data",
+      "个人信息",
+      "身份数据"
+    ],
+    "category": "data_type"
+  }
 }

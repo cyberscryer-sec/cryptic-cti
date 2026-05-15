@@ -3,7 +3,8 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from cryptic.output.indicator_obj import Indicator
-from cryptic.output.out_utils import dedupe_list, norm_timestamp, utc_now_iso
+from cryptic.output.out_utils import dedupe_list, norm_timestamp
+from cryptic.file_utils import utc_now_iso
 
 
 @dataclass(slots=True)

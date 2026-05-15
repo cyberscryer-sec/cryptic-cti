@@ -1,5 +1,4 @@
 from __future__ import annotations
-from pydoc import text
 import re
 import torch
 from pathlib import Path
@@ -109,6 +108,7 @@ def compress_text(text: str, max_chars: int, max_lines: int | None = None) -> st
 
 PROMPT_PATH = Path(__file__).with_name("summary_prompt.txt")
 SUMMARY_SYSTEM_PROMPT = PROMPT_PATH.read_text(encoding="utf-8").strip()
+
 
 def load_summary_model(model_name: str = MODEL_NAME):
     tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
