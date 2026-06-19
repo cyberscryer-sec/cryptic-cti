@@ -6,11 +6,11 @@ A compact cyber threat collections-support project focused on transforming noisy
 
 `cryptic-cti` is a Python-based workflow that demonstrates how messy English- and Chinese-language reporting related to credential theft, infostealers, malware tooling, and cybercrime ecosystem activity can be normalized, clustered, enriched, and converted into analyst-oriented outputs.
 
-The project is designed around a realistic collections-support problem:
+cryptic-cti is designed around a realistic collections-support problem:
 
 > How can multilingual, low-signal cybercrime reporting be transformed into structured intelligence that analysts can quickly interpret and act on?
 
-Rather than functioning as a full-scale threat intelligence platform, this project focuses on one operationally important layer of the workflow:
+Rather than functioning as a full-scale threat intelligence platform, cryptic-cti focuses on one operationally important layer of the workflow:
 
 * multilingual normalization
 * entity consistency
@@ -24,7 +24,7 @@ The workflow emphasizes practical CTI engineering concepts including data normal
 
 ## Screenshots
 
-Based on the current deterministic demo path and bundled fixtures. These are included so reviewers can quickly understand the project without running a model-backed pipeline first.
+These are included for quick demonstration without running a model-backed pipeline first.
 
 ![Cryptic demo artifact bundle](docs/assets/screenshots/demo-artifacts.svg)
 
@@ -51,14 +51,11 @@ Based on the current deterministic demo path and bundled fixtures. These are inc
 * Minimal STIX 2.1 bundle export for CTI sharing workflows
 * Tiny MCP search and collection-gap wrapper for analyst-facing tool use
 * Local DuckDB/dbt analytics path for output QA and portfolio demos
-* Lightweight Airflow DAG example for orchestration discussion
-* Fast deterministic demo command for reviewer-friendly artifact generation
 * RSS/Atom feed ingestion for external CTI source collection
 * STIX bundle ingestion for structured CTI source collection
 * Regex IOC extraction for IPs, domains, URLs, emails, and hashes
 * Optional indicator enrichment with VirusTotal, GreyNoise, Censys, IPinfo, and urlscan
 * Normalized sklearn classifier runtime with offline training utilities
-* GitHub Actions CI with linting and focused deterministic tests
 
 ---
 
@@ -89,7 +86,7 @@ The workflow currently consists of four primary stages:
 3. Normalization
    Canonicalizes aliases, malware names, activities, and related entities into structured outputs.
 
-4. Classification
+5. Classification
    Builds a classifier representation from raw text plus normalized fields, embeds that text, and
    applies a saved sklearn classifier artifact.
 
@@ -200,7 +197,7 @@ pip install ".[analytics]"
 cryptic-analytics-load
 ```
 
-The dbt and Airflow files under `cryptic/analytics/` are lightweight portfolio examples for local analytics and orchestration conversations.
+The dbt and Airflow files under `cryptic/analytics/` are lightweight portfolio examples to show local analytics and orchestration potential.
 
 ---
 
