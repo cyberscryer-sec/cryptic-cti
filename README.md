@@ -99,6 +99,8 @@ The following extensions are intentionally modular. They use cryptic-cti pipelin
 
 ### Fast demo
 
+(For quick demonstration without running a model-backed pipeline first)
+
 Run a deterministic infostealer demo without model downloads or local trained artifacts:
 
 ```bash
