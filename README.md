@@ -28,13 +28,6 @@ The workflow emphasizes practical CTI engineering concepts including data normal
 
 These are included for quick demonstration without running a model-backed pipeline first.
 
-![Cryptic demo artifact bundle](docs/assets/screenshots/demo-artifacts.svg)
-
-![Multilingual normalization examples](docs/assets/screenshots/multilingual-normalization.svg)
-
-![STIX, YARA, and collection gap outputs](docs/assets/screenshots/stix-yara-gap.svg)
-
-![RSS and STIX source adapters](docs/assets/screenshots/source-adapters.svg)
 
 ---
 
