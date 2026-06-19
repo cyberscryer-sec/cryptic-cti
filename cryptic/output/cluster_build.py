@@ -1,14 +1,21 @@
 from __future__ import annotations
+
 from typing import Any
 from uuid import uuid4
 
-from cryptic.output.out_utils import choose_rep, clean_cluster_entities
-from cryptic.output.ctier_ioc_build import record_to_indicators
 from cryptic.output.cluster_obj import Cluster
+from cryptic.output.ctier_ioc_build import record_to_indicators
+from cryptic.output.out_utils import choose_rep, clean_cluster_entities
 from cryptic.output.scoring_utils import compute_cluster_confidence
 
-
-ALLOWED_ENTITY_FIELDS = {"n_malware_or_tools", "n_activity", "n_credential_or_data_types", "n_apps"}
+ALLOWED_ENTITY_FIELDS = {
+    "n_malware_or_tools",
+    "n_activity",
+    "n_data_types",
+    "n_credential_or_data_types",
+    "n_apps",
+    "indicators",
+}
 
 def create_cluster(record: dict[str, Any]) -> Cluster:
     record_id = str(record.get("id", "")).strip()
@@ -27,7 +34,10 @@ def create_cluster(record: dict[str, Any]) -> Cluster:
         cluster.add_str("raw_texts", raw_text)
     cluster.add_str("malware_or_tools", record.get("n_malware_or_tools", []))
     cluster.add_str("activities", record.get("n_activity", []))
-    cluster.add_str("credential_data_types", record.get("n_credential_or_data_types", []))
+    cluster.add_str(
+        "credential_data_types",
+        record.get("n_data_types") or record.get("n_credential_or_data_types", []),
+    )
     cluster.add_str("platforms", record.get("n_apps", []))
     cluster.add_indicators(record_to_indicators(record))
     return cluster
@@ -35,7 +45,10 @@ def create_cluster(record: dict[str, Any]) -> Cluster:
 def merge_into_cluster(cluster: Cluster, record: dict[str, Any]) -> None:
     record_source = str(record.get("source", "")).strip()
     if cluster.source and record_source and cluster.source != record_source:
-        raise ValueError(f"Cannot merge record from source {record_source!r} into cluster with source {cluster.source!r}")
+        raise ValueError(
+            f"Cannot merge record from source {record_source!r} "
+            f"into cluster with source {cluster.source!r}"
+        )
     if not cluster.source and record_source:
         cluster.source = record_source
     cluster.add_str("record_ids", str(record.get("id", "")))
@@ -43,7 +56,10 @@ def merge_into_cluster(cluster: Cluster, record: dict[str, Any]) -> None:
     cluster.add_str("raw_texts", str(record.get("raw_text", "")))
     cluster.add_str("malware_or_tools", record.get("n_malware_or_tools", []))
     cluster.add_str("activities", record.get("n_activity", []))
-    cluster.add_str("credential_data_types", record.get("n_credential_or_data_types", []))
+    cluster.add_str(
+        "credential_data_types",
+        record.get("n_data_types") or record.get("n_credential_or_data_types", []),
+    )
     cluster.add_str("platforms", record.get("n_apps", []))
     cluster.add_indicators(record_to_indicators(record))
 
@@ -58,14 +74,24 @@ def record_entity_set(record: dict[str, Any], field_name: str | None) -> set[str
         fields = list(ALLOWED_ENTITY_FIELDS)
     for field in fields:
         for val in record.get(field, []):
-            if isinstance(val, str):
+            if isinstance(val, dict):
+                value = val.get("value")
+                indicator_type = val.get("type") or val.get("indicator_type")
+                cleaned = f"{indicator_type}:{value}".strip().casefold()
+                if cleaned and value:
+                    values.add(cleaned)
+            elif isinstance(val, str):
                 cleaned = val.strip().casefold()
                 if cleaned:
                     values.add(cleaned)
     return values
 
 
-def is_overlap(record_a: dict[str, Any], record_b: dict[str, Any], field_name: str | None) -> bool:
+def is_overlap(
+    record_a: dict[str, Any],
+    record_b: dict[str, Any],
+    field_name: str | None = None,
+) -> bool:
     source_a = str(record_a.get("source", "")).strip().casefold()
     source_b = str(record_b.get("source", "")).strip().casefold()
     if source_a != source_b:

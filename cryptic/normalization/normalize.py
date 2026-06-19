@@ -1,7 +1,6 @@
-from cryptic.normalization.norm_utils import normalize_key, dedupe_preserve_order
 from cryptic.file_utils import PROJECT_ROOT
-from cryptic.normalization.canonicalize import load_variant_map, canonicalize_value, track_unmapped
-
+from cryptic.normalization.canonicalize import canonicalize_value, load_variant_map, track_unmapped
+from cryptic.normalization.norm_utils import dedupe_preserve_order, normalize_key
 
 MAPPINGS_DIR = PROJECT_ROOT / "cryptic" / "normalization" / "mappings"
 

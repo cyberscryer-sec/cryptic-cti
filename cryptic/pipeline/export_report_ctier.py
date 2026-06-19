@@ -1,10 +1,12 @@
 from __future__ import annotations
+
 import sys
 from pathlib import Path
+
 from cryptic.file_utils import PROCESSED_DIR, latest_matching_file, read_jsonl, write_text
 from cryptic.output.cluster_build import build_clusters
-from cryptic.output.summary_build import cluster_to_summary, summary_to_output
 from cryptic.output.rendering import outputs_to_md_report
+from cryptic.output.summary_build import cluster_to_summary, summary_to_output
 
 
 def render_report(
@@ -21,7 +23,8 @@ def render_report(
     clusters = build_clusters(records)
 
     if use_llm:
-        from cryptic.output.llm_text_utils import load_summary_model, llm_summary_text
+        from cryptic.output.llm_text_utils import llm_summary_text, load_summary_model
+
         tokenizer, model = load_summary_model()
         text_builder = llm_summary_text(tokenizer, model)
     else:
@@ -38,12 +41,12 @@ def render_report(
         outputs.append(summary_to_output(summary))
 
     if include_indicators:
-        from cryptic.output.ctier_ioc_build import create_ioc_list, records_iocs
+        from cryptic.output.ctier_ioc_build import create_indicator_list, records_to_indicators
 
         print("Building indicator-list output", flush=True)
-        ioc_items = records_iocs(records)
+        ioc_items = records_to_indicators(records)
         if ioc_items:
-            outputs.append(create_ioc_list(ioc_items))
+            outputs.append(create_indicator_list(ioc_items))
 
     print("Rendering Markdown report", flush=True)
     report_md = outputs_to_md_report(

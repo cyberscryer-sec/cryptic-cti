@@ -1,0 +1,62 @@
+{
+  "type": "bundle",
+  "id": "bundle--4b43f97e-9ae2-4e06-8e2c-4bd5f7d540b0",
+  "objects": [
+    {
+      "type": "identity",
+      "spec_version": "2.1",
+      "id": "identity--ec539a45-c037-4fc2-88a1-f4529d289be8",
+      "created": "2026-06-17T12:00:00Z",
+      "modified": "2026-06-17T12:00:00Z",
+      "name": "Cryptic Demo Feed",
+      "identity_class": "organization"
+    },
+    {
+      "type": "malware",
+      "spec_version": "2.1",
+      "id": "malware--bbf89424-67d5-5ff0-ae1c-3520abd42113",
+      "created": "2026-06-17T12:00:00Z",
+      "modified": "2026-06-17T12:00:00Z",
+      "name": "Lumma Stealer",
+      "is_family": false,
+      "description": "Infostealer advertised for browser credential and cookie theft.",
+      "confidence": 70
+    },
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--c6b66a8a-12e7-5bc8-a6b4-0d3a5c333f26",
+      "created": "2026-06-17T12:05:00Z",
+      "modified": "2026-06-17T12:05:00Z",
+      "name": "Lumma demo C2 domain",
+      "pattern": "[domain-name:value = 'lumma-demo.example']",
+      "pattern_type": "stix",
+      "valid_from": "2026-06-17T12:05:00Z",
+      "confidence": 72
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--85619920-43c9-5dbb-9f1a-4096eb701f63",
+      "created": "2026-06-17T12:06:00Z",
+      "modified": "2026-06-17T12:06:00Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--c6b66a8a-12e7-5bc8-a6b4-0d3a5c333f26",
+      "target_ref": "malware--bbf89424-67d5-5ff0-ae1c-3520abd42113",
+      "confidence": 72
+    },
+    {
+      "type": "note",
+      "spec_version": "2.1",
+      "id": "note--03fb0796-e98e-5d10-a88a-0daf2fce8d05",
+      "created": "2026-06-17T12:07:00Z",
+      "modified": "2026-06-17T12:07:00Z",
+      "abstract": "Demo STIX context",
+      "content": "中文来源提到 Lumma 窃密程序 出售日志 and browser cookies.",
+      "object_refs": [
+        "indicator--c6b66a8a-12e7-5bc8-a6b4-0d3a5c333f26",
+        "malware--bbf89424-67d5-5ff0-ae1c-3520abd42113"
+      ]
+    }
+  ]
+}

@@ -1,6 +1,6 @@
-from pathlib import Path
 import json
-
+from datetime import datetime, timezone
+from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = PROJECT_ROOT / "data"
@@ -62,7 +62,11 @@ def read_jsonl(path: Path) -> list[dict]:
 def load_json(path: Path) -> dict:
     with path.open("r", encoding="utf-8") as f:
         return json.load(f)
-    
+
 
 def write_text(path: Path | str, text: str, encoding: str = "utf-8") -> None:
     Path(path).write_text(text, encoding=encoding)
+
+
+def utc_now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()

@@ -1,6 +1,7 @@
 from __future__ import annotations
-from cryptic.models.gliner_model import get_gliner_model
+
 from cryptic.extraction.base import ExtractionRunner
+from cryptic.models.gliner_model import get_gliner_model
 from cryptic.preprocessing.chunking import chunk_block_w_offsets, dedupe_entities
 
 model_name = "urchade/gliner_medium-v2.1"
@@ -16,7 +17,7 @@ labels = [
 def extract_candidates(text: str) -> list[dict]:
     model = get_gliner_model()
     chunks = chunk_block_w_offsets(text)
-    print(f"[extract_candidates] {len(chunks)} chunks | text len={len(text)}")
+    # print(f"[extract_candidates] {len(chunks)} chunks | text len={len(text)}")
     all_entities = []
     for chunk in chunks:
         results = model.predict_entities(chunk["text"], labels)
@@ -36,5 +37,5 @@ class GlinerRunner(ExtractionRunner):
         self.model = get_gliner_model()
         self.labels = labels
     def extract(self, text: str) -> list[dict]:
-        return extract_candidates(text)
+        return {"gliner_candidates": extract_candidates(text)}
 

@@ -1,0 +1,32 @@
+{
+  "cache_path": "data/output/indicator_enrichment_cache.jsonl",
+  "timeout_seconds": 20,
+  "providers": {
+    "virustotal": {
+      "enabled": true,
+      "api_key_env": "VT_API_KEY",
+      "supports": ["ipv4", "ipv6", "domain", "url", "md5", "sha1", "sha256"]
+    },
+    "greynoise": {
+      "enabled": true,
+      "api_key_env": "GREYNOISE_API_KEY",
+      "supports": ["ipv4"]
+    },
+    "censys": {
+      "enabled": true,
+      "api_id_env": "CENSYS_API_ID",
+      "api_secret_env": "CENSYS_API_SECRET",
+      "supports": ["ipv4", "ipv6"]
+    },
+    "ipinfo": {
+      "enabled": true,
+      "api_key_env": "IPINFO_TOKEN",
+      "supports": ["ipv4", "ipv6"]
+    },
+    "urlscan": {
+      "enabled": true,
+      "api_key_env": "URLSCAN_API_KEY",
+      "supports": ["domain", "url"]
+    }
+  }
+}

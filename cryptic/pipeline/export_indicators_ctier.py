@@ -1,9 +1,17 @@
 from __future__ import annotations
+
 import sys
 from pathlib import Path
+
+from cryptic.file_utils import (
+    PROCESSED_DIR,
+    default_csv_outpath,
+    default_json_outpath,
+    latest_matching_file,
+    read_jsonl,
+)
 from cryptic.output.ctier_ioc_build import create_indicator_list, records_to_indicators
-from cryptic.file_utils import latest_matching_file, default_json_outpath, default_csv_outpath, read_jsonl, PROCESSED_DIR
-from cryptic.output.serialization import outputobj_to_json, outputobj_to_csv
+from cryptic.output.serialization import outputobj_to_csv, outputobj_to_json
 
 
 def parse_flags(argv: list[str]) -> list[str]:
@@ -33,7 +41,7 @@ def export_iocs(input_file: Path | str, flag_list: list[str]) -> tuple[Path, ...
     n_records = read_jsonl(input_path)
     print(f"Building IOC items from {len(n_records)} records", flush=True)
     ioc_items = records_to_indicators(n_records)
-    print(f"Creating IOC output artifact", flush=True)
+    print("Creating IOC output artifact", flush=True)
     output_obj = create_indicator_list(ioc_items)
     json_output_path = default_json_outpath(input_path, "ctier_normalized", output_obj)
     csv_output_path = default_csv_outpath(json_output_path)

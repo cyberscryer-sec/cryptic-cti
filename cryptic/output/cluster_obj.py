@@ -1,10 +1,11 @@
 from __future__ import annotations
+
 from dataclasses import dataclass, field
 from typing import Any
 
+from cryptic.file_utils import utc_now_iso
 from cryptic.output.indicator_obj import Indicator
 from cryptic.output.out_utils import dedupe_list, norm_timestamp
-from cryptic.file_utils import utc_now_iso
 
 
 @dataclass(slots=True)
@@ -31,9 +32,13 @@ class Cluster:
         self.record_ids = dedupe_list([v.strip() for v in self.record_ids if v.strip()])
         self.languages = dedupe_list([v.strip() for v in self.languages if v.strip()])
         self.raw_texts = dedupe_list([v.strip() for v in self.raw_texts if v.strip()])
-        self.malware_or_tools = dedupe_list([v.strip() for v in self.malware_or_tools if v.strip()])
+        self.malware_or_tools = dedupe_list(
+            [v.strip() for v in self.malware_or_tools if v.strip()]
+        )
         self.activities = dedupe_list([v.strip() for v in self.activities if v.strip()])
-        self.credential_data_types = dedupe_list([v.strip() for v in self.credential_data_types if v.strip()])
+        self.credential_data_types = dedupe_list(
+            [v.strip() for v in self.credential_data_types if v.strip()]
+        )
         self.platforms = dedupe_list([v.strip() for v in self.platforms if v.strip()])
         self.notes = dedupe_list([v.strip() for v in self.notes if v.strip()])
         self.first_seen = norm_timestamp(self.first_seen)
@@ -59,7 +64,16 @@ class Cluster:
         return deduped
 
     def add_str(self, field_name: str, values: str | list[str]) -> None:
-        allowed = {"malware_or_tools", "activities", "credential_data_types", "platforms", "record_ids", "languages", "raw_texts", "notes"}
+        allowed = {
+            "malware_or_tools",
+            "activities",
+            "credential_data_types",
+            "platforms",
+            "record_ids",
+            "languages",
+            "raw_texts",
+            "notes",
+        }
         if field_name not in allowed:
             raise ValueError(f"Invalid field name for string-list add: {field_name}")
         current = getattr(self, field_name)
@@ -95,4 +109,5 @@ class Cluster:
             "platforms": self.platforms,
             "indicators": [indicator.to_dict() for indicator in self.indicators],
             "confidence": self.confidence,
-            "notes": self.notes}
+            "notes": self.notes,
+        }

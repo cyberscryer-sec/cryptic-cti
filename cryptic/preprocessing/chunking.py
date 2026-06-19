@@ -1,8 +1,8 @@
-print(f"starting spacy import...")
 import spacy
 
-
 _nlp = None
+
+
 def get_nlp():
     global _nlp
     if _nlp is None:
@@ -58,6 +58,7 @@ def char_chunks(text: str, target_chars: int = 900, overlap_chars: int = 150) ->
         start = max(end - overlap_chars, start + 1)
     return chunks
 
+
 def chunk_block(block: str) -> list[str]:
     block = block.strip()
     if not block:
@@ -72,20 +73,24 @@ def chunk_block(block: str) -> list[str]:
             pass
     return char_chunks(block, target_chars=700, overlap_chars=200)
 
+
 def chunk_block_w_offsets(block: str):
     chunks = []
     offset = 0
-    raw_chunks = chunk_block(block) 
+    raw_chunks = chunk_block(block)
     for chunk in raw_chunks:
         start = block.find(chunk, offset)
         end = start + len(chunk)
-        chunks.append({
-            "text": chunk,
-            "start": start,
-            "end": end
-        })
+        chunks.append(
+            {
+                "text": chunk,
+                "start": start,
+                "end": end,
+            }
+        )
         offset = end
     return chunks
+
 
 def dedupe_entities(entities):
     seen = set()

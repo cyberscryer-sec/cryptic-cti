@@ -1,4 +1,4 @@
-name: Tests
+name: CI
 
 on:
   push:
@@ -26,9 +26,20 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          python -m spacy download en_core_web_sm
+          pip install -e ".[dev]"
+
+      - name: Lint
+        run: |
+          ruff check cryptic scripts tests pyproject.toml
 
       - name: Run tests
         run: |
-          pytest -v
+          pytest -q -p no:cacheprovider \
+            tests/test_parser_utils.py \
+            tests/test_ctier_parser.py \
+            tests/test_classifier_migration.py \
+            tests/test_cti_extensions.py \
+            tests/test_demo_and_rss.py \
+            tests/test_stix_ingest.py \
+            tests/test_regex_ioc_extraction.py \
+            tests/test_indicator_enrichment.py

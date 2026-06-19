@@ -1,9 +1,10 @@
 from __future__ import annotations
-from cryptic.output.output_obj import Output
-from cryptic.file_utils import utc_now_iso
 
+from cryptic.file_utils import utc_now_iso
+from cryptic.output.output_obj import Output
 
 DEFAULT_TITLE = "CTI Collections Report"
+
 
 def outputobj_to_md(output: Output) -> str:
     if output.type == "cluster_summary":
@@ -122,7 +123,11 @@ def indicators_to_md(output: Output) -> str:
     return "\n".join(lines).strip()
 
 
-def outputs_to_md_report(outputs: list[Output], title: str = DEFAULT_TITLE, w_toc: bool = False) -> str:
+def outputs_to_md_report(
+    outputs: list[Output],
+    title: str = DEFAULT_TITLE,
+    w_toc: bool = False,
+) -> str:
     if not outputs:
         raise ValueError("outputs cannot be empty")
     lines: list[str] = []

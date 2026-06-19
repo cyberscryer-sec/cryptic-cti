@@ -1,13 +1,14 @@
 from __future__ import annotations
+
 import re
-import torch
-from pathlib import Path
-from transformers import AutoModelForCausalLM, AutoTokenizer
 from difflib import SequenceMatcher
+from pathlib import Path
+
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from cryptic.output.cluster_obj import Cluster
 from cryptic.output.out_utils import clean_text, top_values
-
 
 MODEL_NAME = "Qwen/Qwen2.5-3B-Instruct"
 MAX_INPUT_CHARS = 6000
@@ -19,7 +20,7 @@ MAX_RAW_SNIPPETS = 2
 MAX_SNIPPET_CHARS = 500
 
 
-def normalize_line(text: str) -> str: # mostly for deduping
+def normalize_line(text: str) -> str:
     text = text.casefold()
     text = re.sub(r"\s+", " ", text)
     text = re.sub(r"[^\w\s:/@.-]+", "", text)
@@ -34,7 +35,7 @@ def is_near_duplicate(text: str, seen: list[str]) -> bool:
     return False
 
 
-def postprocess_summary(text: str) -> str: # strip model junk
+def postprocess_summary(text: str) -> str:
     text = text.strip()
     prefixes = ["summary:", "analyst summary:", "concise summary:", "here is the summary:"]
     lowered = text.lower()
@@ -50,7 +51,7 @@ def postprocess_summary(text: str) -> str: # strip model junk
     return text
 
 
-def split_by_sent(text: str, max_chars: int) -> str:
+def split_by_sent(text: str, max_chars: int) -> list[str]:
     text = clean_text(text)
     if not text:
         return []
@@ -116,28 +117,36 @@ def load_summary_model(model_name: str = MODEL_NAME):
         model_name,
         torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
         device_map="auto",
-        trust_remote_code=True)
+        trust_remote_code=True,
+    )
     return tokenizer, model
 
 
 def build_summary_messages(source_text: str) -> list[dict[str, str]]:
     return [
         {"role": "system", "content": SUMMARY_SYSTEM_PROMPT},
-        {"role": "user", "content": f"Source text:\n{source_text}\n\nWrite the summary now."}]
+        {"role": "user", "content": f"Source text:\n{source_text}\n\nWrite the summary now."},
+    ]
 
 
-def build_prompt_for_summary(cluster: Cluster, max_snippets: int = MAX_RAW_SNIPPETS, max_snippet_chars: int = MAX_SNIPPET_CHARS) -> str:
+def build_prompt_for_summary(
+    cluster: Cluster,
+    max_snippets: int = MAX_RAW_SNIPPETS,
+    max_snippet_chars: int = MAX_SNIPPET_CHARS,
+) -> str:
     lines: list[str] = []
     lines.append(f"Source: {cluster.source or 'unknown'}")
     lines.append(f"Record count: {len(cluster.record_ids)}")
     lines.append(f"Languages: {', '.join(cluster.languages) if cluster.languages else 'unknown'}")
-    lines.append(f"Confidence: {cluster.confidence if cluster.confidence is not None else 'unknown'}")
+    confidence = cluster.confidence if cluster.confidence is not None else "unknown"
+    lines.append(f"Confidence: {confidence}")
     if cluster.malware_or_tools:
         lines.append(f"Malware/tools: {', '.join(top_values(cluster.malware_or_tools, 5))}")
     if cluster.activities:
         lines.append(f"Activities: {', '.join(top_values(cluster.activities, 5))}")
     if cluster.credential_data_types:
-        lines.append(f"Credential/data types: {', '.join(top_values(cluster.credential_data_types, 5))}")
+        creds = ", ".join(top_values(cluster.credential_data_types, 5))
+        lines.append(f"Credential/data types: {creds}")
     if cluster.platforms:
         lines.append(f"Platforms/apps: {', '.join(top_values(cluster.platforms, 5))}")
     if cluster.indicators:
@@ -219,9 +228,11 @@ def summary_from_cluster(
         do_sample=do_sample,
     )
 
+
 def llm_summary_text(tokenizer, model):
     def builder(cluster: Cluster) -> str:
         return summary_from_cluster(cluster, tokenizer=tokenizer, model=model)
+
     return builder
 
 
@@ -243,12 +254,16 @@ def det_summary_text(cluster: Cluster) -> str:
     if evidence_parts:
         parts.append("This cluster contains " + "; ".join(evidence_parts) + ".")
     else:
-        parts.append("This cluster contains limited structured signal after normalization and clustering.")
+        parts.append(
+            "This cluster contains limited structured signal after normalization and clustering."
+        )
     if len(cluster.languages) > 1:
         parts.append(f"This cluster contains multilingual reporting: {cluster.languages}")
     if len(cluster.record_ids) > 1:
         parts.append(
-            f"The cluster aggregates {len(cluster.record_ids)} related records from source {cluster.source}.")
+            f"The cluster aggregates {len(cluster.record_ids)} related records "
+            f"from source {cluster.source}."
+        )
     else:
         parts.append(f"The cluster is based on a single record from source {cluster.source}.")
     return " ".join(parts)

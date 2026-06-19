@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Cryptic Demo CTI Feed</title>
+    <item>
+      <title>RedLine logs advertised on Telegram</title>
+      <link>https://example.test/cti/redline-logs</link>
+      <pubDate>Wed, 17 Jun 2026 12:00:00 GMT</pubDate>
+      <description>Actor advertises RedLine Stealer browser logs and cookies from Telegram shops.</description>
+    </item>
+    <item>
+      <title>中文暗网帖子出售 Lumma 日志</title>
+      <link>https://example.test/cti/lumma-cn</link>
+      <pubDate>Wed, 17 Jun 2026 13:00:00 GMT</pubDate>
+      <description>卖家声称出售 Lumma 窃密程序 日志，包含 浏览器cookie 和 凭证。</description>
+    </item>
+  </channel>
+</rss>

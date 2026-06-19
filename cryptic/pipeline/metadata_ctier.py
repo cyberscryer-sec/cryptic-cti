@@ -1,9 +1,10 @@
-from pathlib import Path
 import re
-from hashlib import sha256
 import sys
 from datetime import date
-from cryptic.file_utils import write_jsonl, CORPUS_DIR
+from hashlib import sha256
+from pathlib import Path
+
+from cryptic.file_utils import CORPUS_DIR, write_jsonl
 
 
 def detect_format(entry: str) -> str:
@@ -78,18 +79,25 @@ def parse_corpus(corpus_dir: Path) -> list[dict]:
             records.append(record)
     return records
 
+
 def run_metadata_parser(input_dir: Path, out_file: Path | None = None) -> Path:
     print(f"[run_metadata_parser] START input={input_dir}", flush=True)
     print(f"Parsing corpus in {input_dir} ...")
     records = parse_corpus(input_dir)
-    output_path = Path(out_file) if out_file is not None else Path(f"data/processed/ctier_records_{date.today()}.jsonl")
+    output_path = (
+        Path(out_file)
+        if out_file is not None
+        else Path(f"data/processed/ctier_records_{date.today()}.jsonl")
+    )
     write_jsonl(output_path, records)
     print(f"Wrote {len(records)} records to {output_path}")
     return output_path
 
+
 def main() -> None:
     corpus_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else CORPUS_DIR / "ctier"
     run_metadata_parser(corpus_dir)
+
 
 if __name__ == "__main__":
     main()

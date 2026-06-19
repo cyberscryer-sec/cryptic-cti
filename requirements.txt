@@ -1,8 +1,10 @@
 pytest
 spacy
 gliner
-setfit
+joblib
+scikit-learn
 sentence-transformers
 torch
 transformers
+matplotlib
 ruff

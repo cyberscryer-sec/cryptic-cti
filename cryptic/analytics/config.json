@@ -1,0 +1,5 @@
+{
+  "input_glob": "data/processed/ctier_classified*.jsonl",
+  "duckdb_path": "data/output/cryptic_analytics.duckdb",
+  "records_table": "cti_records"
+}

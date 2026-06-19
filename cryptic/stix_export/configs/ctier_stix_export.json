@@ -1,0 +1,11 @@
+{
+  "producer_name": "cryptic-cti",
+  "identity_class": "organization",
+  "tlp": "TLP:CLEAR",
+  "default_confidence": 55,
+  "labels": ["cryptic-cti", "ctier", "normalized"],
+  "indicator_fields": ["indicators"],
+  "malware_fields": ["n_malware_or_tools", "malware_or_tools"],
+  "activity_fields": ["n_activity", "activities"],
+  "source_field": "source_id"
+}

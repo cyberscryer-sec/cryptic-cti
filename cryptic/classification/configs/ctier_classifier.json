@@ -1,0 +1,13 @@
+{
+  "model_path": "trained_models/cti_svc_miniLM_2026-05-15.joblib",
+  "embedding_model": "paraphrase-multilingual-MiniLM-L12-v2",
+  "classifier_text_fields": [
+    "n_activity",
+    "n_malware_or_tools",
+    "n_data_types",
+    "n_apps"
+  ],
+  "prediction_field": "classifier_predicted_label",
+  "status_field": "classification_status",
+  "progress_bar": false
+}

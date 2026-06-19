@@ -1,0 +1,53 @@
+[
+  {
+    "id": "demo_en_001",
+    "source": "demo_fixture",
+    "language": "en",
+    "raw_text": "Actor advertises fresh RedLine logs from Telegram shops, including browser cookies and login credentials. Panel: hxxps://redline-demo[.]example/login",
+    "gliner_candidates": [
+      {"text": "RedLine", "label": "malware or tool name", "score": 0.97},
+      {"text": "logs for sale", "label": "credential theft activity", "score": 0.91},
+      {"text": "browser cookies", "label": "credential or data type", "score": 0.89},
+      {"text": "login credentials", "label": "credential or data type", "score": 0.88},
+      {"text": "Telegram", "label": "platform or application", "score": 0.83}
+    ],
+    "indicators": [
+      {"type": "domain", "value": "redline-demo.example", "confidence": 72}
+    ],
+    "demo_label": "credential-theft-or-infostealer"
+  },
+  {
+    "id": "demo_zh_001",
+    "source": "demo_fixture",
+    "language": "zh",
+    "raw_text": "中文论坛卖家声称出售 Lumma 窃密程序 日志，包含 浏览器cookie、凭证 和 Telegram 联系方式。C2 地址: 198.51.100.24",
+    "gliner_candidates": [
+      {"text": "Lumma 窃密程序", "label": "malware or tool name", "score": 0.96},
+      {"text": "出售日志", "label": "credential theft activity", "score": 0.9},
+      {"text": "浏览器cookie", "label": "credential or data type", "score": 0.88},
+      {"text": "凭证", "label": "credential or data type", "score": 0.87},
+      {"text": "Telegram", "label": "platform or application", "score": 0.82}
+    ],
+    "indicators": [
+      {"type": "domain", "value": "lumma-demo.example", "confidence": 70}
+    ],
+    "demo_label": "credential-theft-or-infostealer"
+  },
+  {
+    "id": "demo_mixed_001",
+    "source": "demo_fixture",
+    "language": "mixed",
+    "raw_text": "Mixed CN/EN lead: 出售账号 from Chrome and Gmail logs; mentions RedLine Stealer and cookie theft. Sample SHA256: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+    "gliner_candidates": [
+      {"text": "RedLine Stealer", "label": "malware or tool name", "score": 0.95},
+      {"text": "出售账号", "label": "credential theft activity", "score": 0.86},
+      {"text": "cookie theft", "label": "credential theft activity", "score": 0.84},
+      {"text": "logs", "label": "credential or data type", "score": 0.81},
+      {"text": "Gmail", "label": "platform or application", "score": 0.8}
+    ],
+    "indicators": [
+      {"type": "ipv4", "value": "203.0.113.10", "confidence": 65}
+    ],
+    "demo_label": "credential-theft-or-infostealer"
+  }
+]

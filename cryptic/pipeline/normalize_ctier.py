@@ -1,18 +1,27 @@
 from __future__ import annotations
+
 import sys
 from pathlib import Path
+
+from cryptic.file_utils import (
+    PROCESSED_DIR,
+    default_jsonl_outpath,
+    latest_matching_file,
+    read_jsonl,
+    write_jsonl,
+)
 from cryptic.normalization.normalize import normalize_candidates
-from cryptic.file_utils import default_jsonl_outpath, latest_matching_file, read_jsonl, write_jsonl, PROCESSED_DIR
 
-
-IN_STAGE = "ctier_classified"
+IN_STAGE = "ctier_semantic_candidates"
 OUT_STAGE = "ctier_normalized"
 
 
 def run_normalizer(i: Path, o: Path | None = None) -> Path:
     print(f"[run_normalizer] START input={i}", flush=True)
     input_path = Path(i)
-    output_path = Path(o) if o is not None else default_jsonl_outpath(input_path, IN_STAGE, OUT_STAGE)
+    output_path = (
+        Path(o) if o is not None else default_jsonl_outpath(input_path, IN_STAGE, OUT_STAGE)
+    )
     print(f"Normalizing {input_path} ...")
     records = read_jsonl(input_path)
     normalized_rows = []
@@ -29,13 +38,14 @@ def run_normalizer(i: Path, o: Path | None = None) -> Path:
     print(f"Wrote {len(normalized_rows)} records to {output_path}")
     return output_path
 
+
 def main() -> None:
     if len(sys.argv) > 1:
         input_path = Path(sys.argv[1])
     else:
-        input_path = latest_matching_file(PROCESSED_DIR, "ctier_classified*.jsonl")
+        input_path = latest_matching_file(PROCESSED_DIR, "ctier_semantic_candidates*.jsonl")
     run_normalizer(input_path)
-    
+
 
 if __name__ == "__main__":
     main()

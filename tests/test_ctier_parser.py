@@ -1,5 +1,7 @@
+import shutil
 from pathlib import Path
-from pipeline.metadata_ctier import parse_corpus
+
+from cryptic.pipeline.metadata_ctier import parse_corpus
 
 
 def write_batch(corpus_dir: Path, batch_name: str, entries: list[str]) -> Path:
@@ -9,18 +11,25 @@ def write_batch(corpus_dir: Path, batch_name: str, entries: list[str]) -> Path:
     return batch_file
 
 
-def test_batch_read(tmp_path: Path):
-    corpus_dir = tmp_path / "corpus"
-    corpus_dir.mkdir()
-    write_batch(
-        corpus_dir,
-        "batch.1",
-        [
-            '3356: Proofpoint observed a spear-phishing campaign spreading Vega Stealer.',
-            """['11345: "follow.user steals data and credentials"', [['follow.user', [1, 2], 'MW']]]""",
-        ],
-    )
-    records = parse_corpus(corpus_dir=corpus_dir)
+def test_batch_read():
+    scratch = Path(".test_ctier_parser_tmp")
+    try:
+        corpus_dir = scratch / "corpus"
+        corpus_dir.mkdir(parents=True)
+        write_batch(
+            corpus_dir,
+            "batch.1",
+            [
+                '3356: Proofpoint observed a spear-phishing campaign spreading Vega Stealer.',
+                (
+                    """['11345: "follow.user steals data and credentials"', """
+                    """[['follow.user', [1, 2], 'MW']]]"""
+                ),
+            ],
+        )
+        records = parse_corpus(corpus_dir=corpus_dir)
+    finally:
+        shutil.rmtree(scratch, ignore_errors=True)
     assert len(records) == 2
     assert records[0]["id"] == "ctier_batch1_001"
     assert records[0]["source"] == "ctier"

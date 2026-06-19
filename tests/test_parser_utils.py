@@ -1,5 +1,6 @@
 import pytest
-from cryptic.pipeline.metadata_ctier import detect_format, split_entries, build_record_id
+
+from cryptic.pipeline.metadata_ctier import build_record_id, detect_format, split_entries
 
 sample = """
 -----

@@ -1,11 +1,12 @@
-from typing import Any
-from collections import Counter
-from cryptic.output.cluster_obj import Cluster
-import re
-from datetime import datetime, timezone
+from __future__ import annotations
 
+import re
+from collections import Counter
+from datetime import datetime, timezone
+from typing import Any
 
 JUNK_CANDIDATES = {"mw", "is", "n"}
+
 
 def drop_junk(record: dict[str, Any], min_score: float = 0.35) -> list[dict[str, Any]]:
     seen: set[tuple[str, str]] = set()
@@ -53,7 +54,6 @@ def top_values(values: list[str], limit: int = 5) -> list[str]:
     return [value for value, _count in ranked[:limit]]
 
 
-
 def dedupe_list(values: list[Any]) -> list[Any]:
     if not isinstance(values, list):
         raise ValueError("Not a list, cannot dedupe")
@@ -93,7 +93,7 @@ def clean_text(text: str) -> str:
     return clean.strip()
 
 
-def clean_cluster_entities(cluster: Cluster, members: list[dict[str, Any]]) -> None:
+def clean_cluster_entities(cluster: Any, members: list[dict[str, Any]]) -> None:
     allowed_malware_or_tools: set[str] = set()
     allowed_activities: set[str] = set()
     allowed_credential_data_types: set[str] = set()
@@ -113,10 +113,26 @@ def clean_cluster_entities(cluster: Cluster, members: list[dict[str, Any]]) -> N
                 allowed_credential_data_types.add(norm_text)
             elif label == "platform or application":
                 allowed_platforms.add(norm_text)
-    cluster.malware_or_tools = [v for v in cluster.malware_or_tools if v.strip() and v.strip().casefold() in allowed_malware_or_tools]
-    cluster.activities = [v for v in cluster.activities if v.strip() and v.strip().casefold() in allowed_activities]
-    cluster.credential_data_types = [v for v in cluster.credential_data_types if v.strip() and v.strip().casefold() in allowed_credential_data_types]
-    cluster.platforms = [v for v in cluster.platforms if v.strip() and v.strip().casefold() in allowed_platforms]
+    cluster.malware_or_tools = [
+        v
+        for v in cluster.malware_or_tools
+        if v.strip() and v.strip().casefold() in allowed_malware_or_tools
+    ]
+    cluster.activities = [
+        v
+        for v in cluster.activities
+        if v.strip() and v.strip().casefold() in allowed_activities
+    ]
+    cluster.credential_data_types = [
+        v
+        for v in cluster.credential_data_types
+        if v.strip() and v.strip().casefold() in allowed_credential_data_types
+    ]
+    cluster.platforms = [
+        v
+        for v in cluster.platforms
+        if v.strip() and v.strip().casefold() in allowed_platforms
+    ]
 
 
 def norm_fieldname(field_name: str) -> str:

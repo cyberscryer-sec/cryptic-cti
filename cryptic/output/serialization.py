@@ -1,8 +1,9 @@
 import csv
 import json
 from pathlib import Path
-from cryptic.output.output_obj import Output
+
 from cryptic.output.out_utils import write_ioc_dict_rows
+from cryptic.output.output_obj import Output
 
 
 def outputobj_to_json(output_obj: Output, output_path: Path | str) -> Path:

@@ -1,0 +1,8 @@
+{
+  "required_metadata": ["description", "author", "date", "threat_name"],
+  "rule_name_regex": "^[A-Za-z][A-Za-z0-9_]{2,80}$",
+  "attack_tag_regex": "^attack\\.t\\d{4}(\\.\\d{3})?$",
+  "require_attack_tag": true,
+  "positive_dir": "samples/positive",
+  "negative_dir": "samples/negative"
+}

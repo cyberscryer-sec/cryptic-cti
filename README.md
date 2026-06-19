@@ -22,6 +22,20 @@ The workflow emphasizes practical CTI engineering concepts including data normal
 
 ---
 
+## Screenshots
+
+Based on the current deterministic demo path and bundled fixtures. These are included so reviewers can quickly understand the project without running a model-backed pipeline first.
+
+![Cryptic demo artifact bundle](docs/assets/screenshots/demo-artifacts.svg)
+
+![Multilingual normalization examples](docs/assets/screenshots/multilingual-normalization.svg)
+
+![STIX, YARA, and collection gap outputs](docs/assets/screenshots/stix-yara-gap.svg)
+
+![RSS and STIX source adapters](docs/assets/screenshots/source-adapters.svg)
+
+---
+
 ## Current Capabilities
 
 * Multilingual normalization (English + Chinese)
@@ -33,6 +47,15 @@ The workflow emphasizes practical CTI engineering concepts including data normal
 * Confidence scoring support
 * Structured JSON/CSV exports
 * Extensible output pipeline architecture
+* YARA rule validation reports for rule quality checks
+* Minimal STIX 2.1 bundle export for CTI sharing workflows
+* Tiny MCP search/enrichment wrapper for analyst-facing tool use
+* Local DuckDB/dbt analytics path for output QA and portfolio demos
+* Fast deterministic demo command for reviewer-friendly artifact generation
+* RSS/Atom feed ingestion for external CTI source collection
+* STIX bundle ingestion for structured CTI source collection
+* Regex IOC extraction for IPs, domains, URLs, emails, and hashes
+* Optional indicator enrichment with VirusTotal, GreyNoise, Censys, IPinfo, and urlscan
 
 ---
 
@@ -67,6 +90,113 @@ The workflow currently consists of four primary stages:
    Canonicalizes aliases, malware names, activities, and related entities into structured outputs.
 
 After normalization, the workflow supports multiple export paths for generating structured analyst-facing outputs.
+
+---
+
+## Analyst and Portfolio Extensions
+
+These extensions are intentionally small and modular. They use Cryptic pipeline outputs as their source of truth and keep heavier tooling behind optional extras.
+
+### Fast demo
+
+Run a deterministic infostealer demo without model downloads or local trained artifacts:
+
+```bash
+cryptic-demo --sample infostealer
+```
+
+The command writes normalized records, classified demo records, cluster summary, STIX bundle, YARA validation report, collection-gap JSON, and an analyst Markdown report under `data/output/demo/<run_id>/`.
+
+### RSS ingestion
+
+Ingest RSS or Atom feed entries as raw Cryptic CTI records:
+
+```bash
+cryptic-rss-ingest cryptic/rss_ingest/fixtures/demo_feed.xml --out data/processed/rss_records.jsonl
+```
+
+The adapter preserves source URL, title, published date, raw text, content hash, and ingest status. STIX/TAXII ingestion is intentionally separate from this first RSS adapter.
+
+### STIX ingestion
+
+Ingest STIX 2.1 bundle JSON as Cryptic CTI records:
+
+```bash
+cryptic-stix-ingest cryptic/stix_ingest/fixtures/demo_bundle.json --out data/processed/stix_records.jsonl
+```
+
+The adapter extracts STIX indicators, malware objects, relationships, notes, confidence, and source object IDs. It also emits `gliner_candidates` for structured malware/tool names so existing Cryptic normalization can process STIX-derived records without a separate schema.
+
+### IOC extraction and enrichment
+
+Regex IOC extraction runs as part of semantic extraction and emits technical indicators in the shared `indicators` field:
+
+```json
+{"type": "domain", "value": "bad.example", "confidence": 86, "tags": ["regex", "technical-indicator"]}
+```
+
+Optional enrichment is a separate stage so normal pipeline runs stay fast and API-key free:
+
+```bash
+cryptic-enrich-indicators data/processed/ctier_classified.jsonl --out data/processed/ctier_enriched.jsonl
+```
+
+Supported enrichment providers are VirusTotal, GreyNoise, Censys, IPinfo, and urlscan. API keys are read from environment variables only, and missing keys skip that provider without failing the run.
+
+### Multilingual normalization showcase
+
+The bundled demo includes English, Chinese, and mixed-language infostealer leads. The point is to make the multilingual normalization edge visible immediately:
+
+| Raw phrase | Canonical field | Canonical value |
+| --- | --- | --- |
+| `RedLine` | `n_malware_or_tools` | `RedLine Stealer` |
+| `Lumma 窃密程序` | `n_malware_or_tools` | `Lumma Stealer` |
+| `logs for sale` / `出售日志` | `n_activity` | `log_sale` |
+| `browser cookies` / `浏览器cookie` | `n_data_types` | `cookies` |
+| `Telegram` / `电报` | `n_apps` | `Telegram` |
+
+### YARA validation
+
+Validate YARA rule syntax, required metadata, naming conventions, ATT&CK tags, and optional sample folders:
+
+```bash
+pip install ".[yara]"
+cryptic-yara-check rules/example.yar --samples rules
+```
+
+Use `--skip-syntax` to run only naming and metadata lint without `yara-python`.
+
+### STIX export
+
+Export normalized or classified CTI records into a minimal STIX 2.1 bundle:
+
+```bash
+cryptic-stix-export data/processed/ctier_classified_2026-04-07.jsonl --out data/output/ctier_stix_bundle.json
+```
+
+The exporter creates source identity, malware/tool objects, valid technical indicators when observable patterns can be inferred, relationships, confidence, and analyst notes.
+
+### MCP tools
+
+Run a small MCP server around Cryptic search and gap-summary helpers:
+
+```bash
+pip install ".[mcp]"
+cryptic-mcp-server
+```
+
+Exposed tools include `search_iocs`, `get_cluster`, and `summarize_collection_gap`.
+
+### Local analytics
+
+Load JSONL CTI outputs into DuckDB for dbt models covering indicator counts, classification distribution, source confidence, and dedupe stats:
+
+```bash
+pip install ".[analytics]"
+cryptic-analytics-load
+```
+
+The dbt and Airflow files under `cryptic/analytics/` are lightweight portfolio examples for local analytics and orchestration conversations.
 
 ---
 
@@ -123,6 +253,13 @@ The project uses lawful sample data and synthetic examples for demonstration pur
 Planned future improvements include:
 
 * STIX export support
+* YARA rule validation
+* MCP analyst tool wrapper
+* Local CTI analytics with DuckDB/dbt
+* Reviewer-friendly demo artifact bundle
+* RSS/Atom source adapters
+* STIX bundle source adapter
+* Regex IOC extraction and optional external enrichment
 * Additional language coverage
 * Improved clustering confidence logic
 * Additional collection-source adapters

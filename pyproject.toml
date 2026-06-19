@@ -11,7 +11,9 @@ requires-python = ">=3.9"
 dependencies = [
     "spacy",
     "gliner",
-    "setfit",
+    "joblib",
+    "scikit-learn",
+    "sentence-transformers",
 ]
 authors = [
     { name="Cosmic Octopus" }
@@ -19,6 +21,14 @@ authors = [
 
 [project.scripts]
 cryptic = "cryptic.cli:main"
+cryptic-yara-check = "cryptic.yara_check.cli:main"
+cryptic-stix-export = "cryptic.stix_export.cli:main"
+cryptic-analytics-load = "cryptic.analytics.loader:main"
+cryptic-mcp-server = "cryptic.mcp_server.server:main"
+cryptic-rss-ingest = "cryptic.rss_ingest.cli:main"
+cryptic-demo = "cryptic.demo.cli:main"
+cryptic-stix-ingest = "cryptic.stix_ingest.cli:main"
+cryptic-enrich-indicators = "cryptic.enrichment.cli:main"
 
 [tool.setuptools]
 py-modules = []
@@ -44,4 +54,41 @@ select = [
 dev = [
     "pytest",
     "ruff",
+]
+yara = [
+    "yara-python",
+]
+stix = [
+    "stix2",
+]
+mcp = [
+    "mcp",
+]
+analytics = [
+    "duckdb",
+    "dbt-core",
+    "dbt-duckdb",
+]
+all = [
+    "yara-python",
+    "stix2",
+    "mcp",
+    "duckdb",
+    "dbt-core",
+    "dbt-duckdb",
+]
+
+[tool.setuptools.package-data]
+cryptic = [
+    "classification/configs/*.json",
+    "enrichment/configs/*.json",
+    "yara_check/configs/*.json",
+    "stix_export/configs/*.json",
+    "analytics/*.json",
+    "analytics/dbt_project.yml",
+    "analytics/models/*.sql",
+    "analytics/airflow/*.py",
+    "demo/fixtures/*",
+    "rss_ingest/fixtures/*",
+    "stix_ingest/fixtures/*",
 ]
