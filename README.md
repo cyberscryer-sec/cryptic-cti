@@ -49,13 +49,16 @@ Based on the current deterministic demo path and bundled fixtures. These are inc
 * Extensible output pipeline architecture
 * YARA rule validation reports for rule quality checks
 * Minimal STIX 2.1 bundle export for CTI sharing workflows
-* Tiny MCP search/enrichment wrapper for analyst-facing tool use
+* Tiny MCP search and collection-gap wrapper for analyst-facing tool use
 * Local DuckDB/dbt analytics path for output QA and portfolio demos
+* Lightweight Airflow DAG example for orchestration discussion
 * Fast deterministic demo command for reviewer-friendly artifact generation
 * RSS/Atom feed ingestion for external CTI source collection
 * STIX bundle ingestion for structured CTI source collection
 * Regex IOC extraction for IPs, domains, URLs, emails, and hashes
 * Optional indicator enrichment with VirusTotal, GreyNoise, Censys, IPinfo, and urlscan
+* Normalized sklearn classifier runtime with offline training utilities
+* GitHub Actions CI with linting and focused deterministic tests
 
 ---
 
@@ -81,15 +84,16 @@ The workflow currently consists of four primary stages:
    Extracts and structures source metadata from raw lead text.
 
 2. Semantic Extraction  
-   Performs multilingual entity extraction and candidate identification.
+   Performs multilingual entity extraction, candidate identification, and regex IOC extraction.
 
-3. Classification  
-   Applies category and activity classification logic to extracted entities.
-
-4. Normalization  
+3. Normalization
    Canonicalizes aliases, malware names, activities, and related entities into structured outputs.
 
-After normalization, the workflow supports multiple export paths for generating structured analyst-facing outputs.
+4. Classification
+   Builds a classifier representation from raw text plus normalized fields, embeds that text, and
+   applies a saved sklearn classifier artifact.
+
+After classification, the workflow supports multiple export paths for generating structured analyst-facing outputs.
 
 ---
 
@@ -203,11 +207,14 @@ The dbt and Airflow files under `cryptic/analytics/` are lightweight portfolio e
 ## Technologies Used
 
 * Python
-* Pydantic
 * GLiNER
-* JSON/YAML configuration workflows
+* spaCy
+* scikit-learn
+* sentence-transformers
+* JSON configuration workflows
 * Structured export pipelines
 * Rule-based normalization systems
+* STIX 2.1, YARA, MCP, DuckDB/dbt, and Airflow extension points
 
 ---
 
@@ -223,13 +230,29 @@ cd cryptic-cti
 ### Install dependencies
 
 ```bash
-pip install -r requirements.txt
+pip install -e ".[dev]"
 ```
 
-### Run the workflow
+Install optional extras as needed:
 
 ```bash
-python main.py
+pip install -e ".[yara,stix,mcp,analytics]"
+```
+
+### Run the fast reviewer demo
+
+```bash
+cryptic-demo --sample infostealer
+```
+
+### Run the model-backed CTIER pipeline
+
+The full CTIER pipeline expects local CTIER corpus files under `data/corpus/ctier` and a trained
+classifier artifact matching `cryptic/classification/configs/ctier_classifier.json`. Local data and
+trained model artifacts are intentionally ignored by Git.
+
+```bash
+cryptic data/corpus/ctier
 ```
 
 ---
@@ -252,20 +275,15 @@ The project uses lawful sample data and synthetic examples for demonstration pur
 
 Planned future improvements include:
 
-* STIX export support
-* YARA rule validation
-* MCP analyst tool wrapper
-* Local CTI analytics with DuckDB/dbt
-* Reviewer-friendly demo artifact bundle
-* RSS/Atom source adapters
-* STIX bundle source adapter
-* Regex IOC extraction and optional external enrichment
 * Additional language coverage
 * Improved clustering confidence logic
 * Additional collection-source adapters
 * Analyst review/triage workflows
 * Enhanced report generation
 * IOC-enriched detection generation
+* Optional LLM-backed cluster-summary tool exposed through MCP
+* TAXII collection support
+* Public sample model artifact or model-card style training notes
 * Expanded testing and validation coverage
 
 ---
