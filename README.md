@@ -1,3 +1,5 @@
+![CI](https://github.com/cyberscryer-sec/cryptic-cti/actions/workflows/tests.yml/badge.svg)
+
 # cryptic-cti
 
 A compact cyber threat collections-support project focused on transforming noisy multilingual cybercrime leads into structured, analyst-usable outputs.
