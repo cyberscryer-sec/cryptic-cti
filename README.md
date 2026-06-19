@@ -100,9 +100,9 @@ After classification, the workflow supports multiple export paths for generating
 
 ---
 
-## Analyst and Portfolio Extensions
+## Extensions
 
-These extensions are intentionally small and modular. They use Cryptic pipeline outputs as their source of truth and keep heavier tooling behind optional extras.
+The following extensions are intentionally modular. They use cryptic-cti pipeline outputs as their source of truth and keep heavier tooling behind optional extras.
 
 ### Fast demo
 
@@ -116,7 +116,7 @@ The command writes normalized records, classified demo records, cluster summary,
 
 ### RSS ingestion
 
-Ingest RSS or Atom feed entries as raw Cryptic CTI records:
+Ingest RSS or Atom feed entries as raw cryptic-cti records:
 
 ```bash
 cryptic-rss-ingest cryptic/rss_ingest/fixtures/demo_feed.xml --out data/processed/rss_records.jsonl
@@ -126,7 +126,7 @@ The adapter preserves source URL, title, published date, raw text, content hash,
 
 ### STIX ingestion
 
-Ingest STIX 2.1 bundle JSON as Cryptic CTI records:
+Ingest STIX 2.1 bundle JSON as cryptic-cti records:
 
 ```bash
 cryptic-stix-ingest cryptic/stix_ingest/fixtures/demo_bundle.json --out data/processed/stix_records.jsonl
@@ -185,7 +185,7 @@ The exporter creates source identity, malware/tool objects, valid technical indi
 
 ### MCP tools
 
-Run a small MCP server around Cryptic search and gap-summary helpers:
+Run a small MCP server around cryptic-cti search and gap-summary helpers:
 
 ```bash
 pip install ".[mcp]"
