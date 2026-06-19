@@ -78,15 +78,19 @@ The goal is not to automate intelligence analysis end-to-end, but to reduce nois
 The workflow currently consists of four primary stages:
 
 1. Metadata Parsing  
+
    Extracts and structures source metadata from raw lead text.
 
-2. Semantic Extraction  
+3. Semantic Extraction  
+
    Performs multilingual entity extraction, candidate identification, and regex IOC extraction.
 
-3. Normalization
+4. Normalization
+
    Canonicalizes aliases, malware names, activities, and related entities into structured outputs.
 
-5. Classification
+6. Classification
+
    Builds a classifier representation from raw text plus normalized fields, embeds that text, and
    applies a saved sklearn classifier artifact.
 
