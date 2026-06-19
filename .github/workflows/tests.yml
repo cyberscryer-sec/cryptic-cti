@@ -10,32 +10,24 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        python-version: ["3.11"]
-
     steps:
       - name: Check out repo
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-          cache: "pip"
+        run: |
+          git clone "https://github.com/${GITHUB_REPOSITORY}.git" .
+          git checkout "${GITHUB_SHA}"
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -e ".[dev]"
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -e ".[dev]"
 
       - name: Lint
         run: |
-          ruff check cryptic scripts tests pyproject.toml
+          python3 -m ruff check cryptic scripts tests pyproject.toml
 
       - name: Run tests
         run: |
-          pytest -q -p no:cacheprovider \
+          python3 -m pytest -q -p no:cacheprovider \
             tests/test_parser_utils.py \
             tests/test_ctier_parser.py \
             tests/test_classifier_migration.py \
