@@ -26,9 +26,6 @@ The workflow emphasizes practical CTI engineering concepts including data normal
 
 ## Screenshots
 
-These are included for quick demonstration without running a model-backed pipeline first.
-
-
 ---
 
 ## Current Capabilities
