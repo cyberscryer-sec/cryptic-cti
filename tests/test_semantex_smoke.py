@@ -1,4 +1,16 @@
-from collections_workflow.cryptic.extraction.gliner_utils import extract_candidates
+from __future__ import annotations
+
+import os
+
+import pytest
+
+if not os.environ.get("CRYPTIC_RUN_GLINER_SMOKE"):
+    pytest.skip(
+        "Set CRYPTIC_RUN_GLINER_SMOKE=1 to run GLiNER model smoke test",
+        allow_module_level=True,
+    )
+
+from cryptic.extraction.gliner_utils import extract_candidates
 
 
 def test_gliner_extract_returns_list():

@@ -1,49 +1,52 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
-  <title id="title">Source adapters screenshot</title>
-  <desc id="desc">Screenshot showing RSS and STIX source adapters feeding Cryptic-compatible CTI records.</desc>
+  <title id="title">Source adapters and pipeline path</title>
+  <desc id="desc">Preview showing RSS and STIX source adapters feeding Cryptic-compatible records and the normalized CTI pipeline.</desc>
   <rect width="1200" height="720" fill="#f7f9fb"/>
   <rect x="40" y="36" width="1120" height="648" rx="10" fill="#ffffff" stroke="#d8dee8"/>
-  <text x="76" y="88" fill="#172033" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700">External CTI source adapters feed the same pipeline</text>
-  <text x="76" y="122" fill="#536173" font-family="Segoe UI, Arial, sans-serif" font-size="18">RSS/Atom and STIX bundles become Cryptic records instead of isolated one-off scripts.</text>
+
+  <text x="76" y="88" fill="#172033" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700">External CTI Source Adapters</text>
+  <text x="76" y="122" fill="#536173" font-family="Segoe UI, Arial, sans-serif" font-size="18">RSS/Atom feeds and STIX bundles are converted into the same record shape used by the pipeline.</text>
 
   <g font-family="Segoe UI, Arial, sans-serif">
-    <rect x="92" y="186" width="270" height="170" rx="10" fill="#eef5ff" stroke="#b9cfee"/>
-    <text x="126" y="230" fill="#244d82" font-size="22" font-weight="700">RSS / Atom feed</text>
-    <text x="126" y="268" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="15">cryptic-rss-ingest feed.xml</text>
-    <text x="126" y="298" fill="#536173" font-size="16">title, link, published_at,</text>
-    <text x="126" y="324" fill="#536173" font-size="16">raw_text, content_hash</text>
+    <rect x="92" y="178" width="280" height="172" rx="10" fill="#eef5ff" stroke="#b9cfee"/>
+    <text x="126" y="220" fill="#244d82" font-size="22" font-weight="700">RSS / Atom input</text>
+    <text x="126" y="258" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="15">cryptic-rss-ingest</text>
+    <text x="126" y="294" fill="#536173" font-size="16">2 fixture entries parsed</text>
+    <text x="126" y="322" fill="#536173" font-size="16">title, URL, date, raw text</text>
 
-    <rect x="92" y="396" width="270" height="170" rx="10" fill="#f4f0ff" stroke="#cec2f0"/>
-    <text x="126" y="440" fill="#594098" font-size="22" font-weight="700">STIX 2.1 bundle</text>
-    <text x="126" y="478" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="15">cryptic-stix-ingest bundle.json</text>
-    <text x="126" y="508" fill="#536173" font-size="16">indicators, malware, notes,</text>
-    <text x="126" y="534" fill="#536173" font-size="16">relationships, confidence</text>
+    <rect x="92" y="390" width="280" height="172" rx="10" fill="#f7f1eb" stroke="#dfc9b5"/>
+    <text x="126" y="432" fill="#6f4c2f" font-size="22" font-weight="700">STIX bundle input</text>
+    <text x="126" y="470" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="15">cryptic-stix-ingest</text>
+    <text x="126" y="506" fill="#536173" font-size="16">2 fixture records emitted</text>
+    <text x="126" y="534" fill="#536173" font-size="16">indicators, malware, notes</text>
 
-    <path d="M384 270 C470 270 486 330 560 330" fill="none" stroke="#8596aa" stroke-width="4"/>
-    <path d="M384 480 C470 480 486 390 560 390" fill="none" stroke="#8596aa" stroke-width="4"/>
-    <path d="M548 320 L566 330 L548 340 Z" fill="#8596aa"/>
-    <path d="M548 380 L566 390 L548 400 Z" fill="#8596aa"/>
+    <path d="M394 264 C468 264 484 332 554 332" fill="none" stroke="#8596aa" stroke-width="4"/>
+    <path d="M394 476 C468 476 484 398 554 398" fill="none" stroke="#8596aa" stroke-width="4"/>
+    <path d="M542 322 L562 332 L542 342 Z" fill="#8596aa"/>
+    <path d="M542 388 L562 398 L542 408 Z" fill="#8596aa"/>
 
-    <rect x="574" y="268" width="252" height="184" rx="10" fill="#edf7f1" stroke="#b8dec6"/>
-    <text x="606" y="312" fill="#1c5f36" font-size="22" font-weight="700">Cryptic records</text>
-    <text x="606" y="350" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="16">source: rss | stix</text>
-    <text x="606" y="380" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="16">raw_text</text>
-    <text x="606" y="410" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="16">gliner_candidates</text>
-    <text x="606" y="440" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="16">indicators</text>
+    <rect x="574" y="266" width="252" height="198" rx="10" fill="#edf7f1" stroke="#b8dec6"/>
+    <text x="606" y="310" fill="#1c5f36" font-size="22" font-weight="700">Cryptic record</text>
+    <text x="606" y="348" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="16">source</text>
+    <text x="606" y="378" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="16">raw_text</text>
+    <text x="606" y="408" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="16">gliner_candidates</text>
+    <text x="606" y="438" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="16">indicators</text>
 
-    <path d="M844 360 C902 360 916 360 964 360" fill="none" stroke="#8596aa" stroke-width="4"/>
-    <path d="M952 350 L970 360 L952 370 Z" fill="#8596aa"/>
+    <path d="M846 365 C900 365 918 365 962 365" fill="none" stroke="#8596aa" stroke-width="4"/>
+    <path d="M950 355 L970 365 L950 375 Z" fill="#8596aa"/>
 
-    <rect x="982" y="208" width="142" height="304" rx="10" fill="#fff5e6" stroke="#edd2a2"/>
-    <text x="1012" y="250" fill="#815611" font-size="20" font-weight="700">Pipeline</text>
-    <text x="1008" y="294" fill="#304157" font-size="15">normalize</text>
-    <text x="1008" y="326" fill="#304157" font-size="15">classify</text>
-    <text x="1008" y="358" fill="#304157" font-size="15">cluster</text>
-    <text x="1008" y="390" fill="#304157" font-size="15">export STIX</text>
-    <text x="1008" y="422" fill="#304157" font-size="15">YARA lint</text>
-    <text x="1008" y="454" fill="#304157" font-size="15">MCP search</text>
+    <rect x="982" y="184" width="142" height="362" rx="10" fill="#fff5e6" stroke="#edd2a2"/>
+    <text x="1006" y="226" fill="#815611" font-size="20" font-weight="700">Pipeline</text>
+    <text x="1004" y="270" fill="#304157" font-size="15">extract</text>
+    <text x="1004" y="302" fill="#304157" font-size="15">normalize</text>
+    <text x="1004" y="334" fill="#304157" font-size="15">classify</text>
+    <text x="1004" y="366" fill="#304157" font-size="15">cluster</text>
+    <text x="1004" y="398" fill="#304157" font-size="15">enrich</text>
+    <text x="1004" y="430" fill="#304157" font-size="15">export STIX</text>
+    <text x="1004" y="462" fill="#304157" font-size="15">YARA draft</text>
+    <text x="1004" y="494" fill="#304157" font-size="15">MCP search</text>
   </g>
 
   <rect x="76" y="610" width="1048" height="44" rx="8" fill="#e8eef5"/>
-  <text x="100" y="638" fill="#304157" font-family="Segoe UI, Arial, sans-serif" font-size="16">Hiring-manager optic: adapters extend the same CTI normalization architecture rather than creating disconnected scripts.</text>
+  <text x="100" y="638" fill="#304157" font-family="Segoe UI, Arial, sans-serif" font-size="16">Adapters preserve source context while reusing the same normalization, enrichment, export, and search infrastructure.</text>
 </svg>

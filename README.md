@@ -26,6 +26,22 @@ The workflow emphasizes practical CTI engineering concepts including data normal
 
 ## Screenshots
 
+### Deterministic demo artifacts
+
+![Deterministic demo artifacts](docs/assets/screenshots/demo-artifacts.svg)
+
+### Multilingual normalization
+
+![Multilingual normalization](docs/assets/screenshots/multilingual-normalization.svg)
+
+### STIX and YARA outputs
+
+![STIX and YARA outputs](docs/assets/screenshots/stix-yara-gap.svg)
+
+### Source adapters and pipeline path
+
+![Source adapters and pipeline path](docs/assets/screenshots/source-adapters.svg)
+
 ---
 
 ## Current Capabilities
@@ -40,6 +56,7 @@ The workflow emphasizes practical CTI engineering concepts including data normal
 * Structured JSON/CSV exports
 * Extensible output pipeline architecture
 * YARA rule validation reports for rule quality checks
+* Draft YARA hunt-rule suggestions from normalized CTI records
 * Minimal STIX 2.1 bundle export for CTI sharing workflows
 * Tiny MCP search and collection-gap wrapper for analyst-facing tool use
 * Local DuckDB/dbt analytics path for output QA and portfolio demos
@@ -104,7 +121,7 @@ Run a deterministic infostealer demo without model downloads or local trained ar
 cryptic-demo --sample infostealer
 ```
 
-The command writes normalized records, classified demo records, cluster summary, STIX bundle, YARA validation report, collection-gap JSON, and an analyst Markdown report under `data/output/demo/<run_id>/`.
+The command writes normalized records, classified demo records, cluster summary, STIX bundle, draft YARA suggestions, YARA validation report, collection-gap JSON, and an analyst Markdown report under `data/output/demo/<run_id>/`.
 
 ### RSS ingestion
 
@@ -164,6 +181,16 @@ cryptic-yara-check rules/example.yar --samples rules
 ```
 
 Use `--skip-syntax` to run only naming and metadata lint without `yara-python`.
+
+### YARA draft suggestions
+
+Generate conservative analyst-review YARA hunt drafts from normalized or classified CTI records:
+
+```bash
+cryptic-yara-suggest data/processed/ctier_classified.jsonl --out data/output/suggested_yara_rules.yar --report data/output/suggested_yara_rules.json
+```
+
+Generated rules are marked as drafts and should be reviewed before any operational use.
 
 ### STIX export
 
@@ -234,10 +261,30 @@ Install optional extras as needed:
 pip install -e ".[yara,stix,mcp,analytics]"
 ```
 
-### Run the fast reviewer demo
+### Run the fast deterministic demo
 
 ```bash
 cryptic-demo --sample infostealer
+```
+
+### Run tests
+
+```bash
+python -m pytest
+python -m ruff check .
+```
+
+The GLiNER model smoke test is opt-in because it loads the heavyweight extraction model and
+runtime dependencies. To run it explicitly:
+
+```bash
+CRYPTIC_RUN_GLINER_SMOKE=1 python -m pytest tests/test_semantex_smoke.py
+```
+
+In PowerShell:
+
+```powershell
+$env:CRYPTIC_RUN_GLINER_SMOKE="1"; python -m pytest tests/test_semantex_smoke.py
 ```
 
 ### Run the model-backed CTIER pipeline

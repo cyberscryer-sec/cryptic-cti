@@ -10,6 +10,7 @@ from cryptic.mcp_server.search import summarize_collection_gap
 from cryptic.normalization.normalize import normalize_candidates
 from cryptic.stix_export.exporter import records_to_stix_bundle
 from cryptic.yara_check.validator import validate_yara_rules, write_reports
+from cryptic.yara_suggest.generator import generate_yara_suggestions, write_yara_suggestions
 
 FIXTURES_DIR = Path(__file__).resolve().parent / "fixtures"
 DEFAULT_SAMPLE = FIXTURES_DIR / "infostealer_candidates.json"
@@ -172,6 +173,8 @@ def run_demo(sample: str = "infostealer", output_root: str | Path | None = None)
     clusters_path = out_dir / "clusters.jsonl"
     gap_path = out_dir / "collection_gap.json"
     stix_path = out_dir / "ctier_stix_bundle.json"
+    yara_suggestions_path = out_dir / "suggested_yara_rules.yar"
+    yara_suggestions_report_path = out_dir / "suggested_yara_rules.json"
     report_path = out_dir / "analyst_report.md"
 
     write_jsonl(normalized_path, normalized_records)
@@ -181,7 +184,13 @@ def run_demo(sample: str = "infostealer", output_root: str | Path | None = None)
     write_json(gap_path, gap_summary)
     write_json(stix_path, records_to_stix_bundle(classified_records))
 
-    yara_report = validate_yara_rules(DEFAULT_YARA_RULE, run_syntax=False)
+    yara_suggestions = generate_yara_suggestions(classified_records)
+    yara_rule_path, yara_suggestion_json_path = write_yara_suggestions(
+        yara_suggestions,
+        yara_suggestions_path,
+        yara_suggestions_report_path,
+    )
+    yara_report = validate_yara_rules(yara_rule_path, run_syntax=False)
     yara_json_path, yara_md_path = write_reports(
         yara_report,
         out_dir / "yara_validation_report.json",
@@ -194,6 +203,8 @@ def run_demo(sample: str = "infostealer", output_root: str | Path | None = None)
         "clusters": clusters_path,
         "collection_gap": gap_path,
         "stix_bundle": stix_path,
+        "yara_suggestions": yara_rule_path,
+        "yara_suggestion_report": yara_suggestion_json_path,
         "yara_json": yara_json_path,
         "yara_markdown": yara_md_path,
     }

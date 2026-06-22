@@ -1,20 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
-  <title id="title">Cryptic demo artifact bundle screenshot</title>
-  <desc id="desc">Reviewer-focused screenshot showing the cryptic-demo command and generated CTI artifacts.</desc>
+  <title id="title">Cryptic demo artifact bundle</title>
+  <desc id="desc">Preview of deterministic cryptic-demo outputs generated from bundled multilingual infostealer records.</desc>
   <rect width="1200" height="720" fill="#f7f9fb"/>
   <rect x="40" y="36" width="1120" height="648" rx="10" fill="#ffffff" stroke="#d8dee8"/>
-  <text x="76" y="88" fill="#172033" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700">Fast CTI Demo: one command, analyst-ready artifacts</text>
-  <text x="76" y="122" fill="#536173" font-family="Segoe UI, Arial, sans-serif" font-size="18">Deterministic reviewer demo with no model downloads or private data required</text>
 
-  <rect x="76" y="152" width="1048" height="86" rx="8" fill="#101820"/>
+  <text x="76" y="88" fill="#172033" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700">Deterministic CTI Demo Artifacts</text>
+  <text x="76" y="122" fill="#536173" font-family="Segoe UI, Arial, sans-serif" font-size="18">One local command writes normalized records, CTI exports, validation reports, and an analyst summary.</text>
+
+  <rect x="76" y="152" width="1048" height="92" rx="8" fill="#101820"/>
   <circle cx="104" cy="182" r="7" fill="#ff6b6b"/>
   <circle cx="128" cy="182" r="7" fill="#ffd166"/>
   <circle cx="152" cy="182" r="7" fill="#06d6a0"/>
-  <text x="104" y="217" fill="#dce6f2" font-family="Consolas, Menlo, monospace" font-size="20">$ cryptic-demo --sample infostealer</text>
-  <text x="104" y="250" fill="#8fd19e" font-family="Consolas, Menlo, monospace" font-size="18">Cryptic demo artifacts written to: data/output/demo/&lt;run_id&gt;/</text>
+  <text x="104" y="216" fill="#dce6f2" font-family="Consolas, Menlo, monospace" font-size="20">$ cryptic-demo --sample infostealer</text>
+  <text x="104" y="246" fill="#8fd19e" font-family="Consolas, Menlo, monospace" font-size="17">Wrote 10 demo artifacts under data/output/demo/readme_screenshot_review/</text>
 
-  <text x="76" y="294" fill="#172033" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Generated output bundle</text>
-  <text x="76" y="324" fill="#536173" font-family="Segoe UI, Arial, sans-serif" font-size="16">Matches the current deterministic demo output: 3 multilingual infostealer leads transformed into structured CTI artifacts.</text>
+  <text x="76" y="294" fill="#172033" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Output bundle from the current demo run</text>
+  <text x="76" y="324" fill="#536173" font-family="Segoe UI, Arial, sans-serif" font-size="16">3 multilingual infostealer leads are normalized, classified, clustered, exported, and checked.</text>
 
   <g font-family="Segoe UI, Arial, sans-serif">
     <rect x="76" y="356" width="238" height="96" rx="8" fill="#edf7f1" stroke="#b8dec6"/>
@@ -24,40 +25,40 @@
 
     <rect x="346" y="356" width="238" height="96" rx="8" fill="#eef5ff" stroke="#b9cfee"/>
     <text x="370" y="390" fill="#244d82" font-size="18" font-weight="700">classified.jsonl</text>
-    <text x="370" y="420" fill="#456280" font-size="15">credential-theft-or-</text>
-    <text x="370" y="442" fill="#456280" font-size="15">infostealer demo labels</text>
+    <text x="370" y="420" fill="#456280" font-size="15">deterministic demo labels</text>
+    <text x="370" y="442" fill="#456280" font-size="15">for fast local review</text>
 
     <rect x="616" y="356" width="238" height="96" rx="8" fill="#fff5e6" stroke="#edd2a2"/>
     <text x="640" y="390" fill="#815611" font-size="18" font-weight="700">clusters.jsonl</text>
     <text x="640" y="420" fill="#78613e" font-size="15">English, Chinese, and</text>
     <text x="640" y="442" fill="#78613e" font-size="15">mixed-language grouping</text>
 
-    <rect x="886" y="356" width="238" height="96" rx="8" fill="#f4f0ff" stroke="#cec2f0"/>
-    <text x="910" y="390" fill="#594098" font-size="18" font-weight="700">analyst_report.md</text>
-    <text x="910" y="420" fill="#665481" font-size="15">human-readable summary</text>
-    <text x="910" y="442" fill="#665481" font-size="15">for portfolio review</text>
+    <rect x="886" y="356" width="238" height="96" rx="8" fill="#f7f1eb" stroke="#dfc9b5"/>
+    <text x="910" y="390" fill="#6f4c2f" font-size="18" font-weight="700">analyst_report.md</text>
+    <text x="910" y="420" fill="#735a45" font-size="15">human-readable summary</text>
+    <text x="910" y="442" fill="#735a45" font-size="15">with artifact links</text>
 
     <rect x="76" y="484" width="238" height="96" rx="8" fill="#eef5ff" stroke="#b9cfee"/>
     <text x="100" y="518" fill="#244d82" font-size="18" font-weight="700">ctier_stix_bundle.json</text>
-    <text x="100" y="548" fill="#456280" font-size="15">shareable STIX 2.1</text>
-    <text x="100" y="570" fill="#456280" font-size="15">bundle output</text>
+    <text x="100" y="548" fill="#456280" font-size="15">19 STIX objects for</text>
+    <text x="100" y="570" fill="#456280" font-size="15">sharing workflows</text>
 
     <rect x="346" y="484" width="238" height="96" rx="8" fill="#edf7f1" stroke="#b8dec6"/>
-    <text x="370" y="518" fill="#1c5f36" font-size="18" font-weight="700">YARA reports</text>
-    <text x="370" y="548" fill="#3d6b4f" font-size="15">metadata, naming,</text>
-    <text x="370" y="570" fill="#3d6b4f" font-size="15">ATT&amp;CK lint pass</text>
+    <text x="370" y="518" fill="#1c5f36" font-size="18" font-weight="700">YARA draft rules</text>
+    <text x="370" y="548" fill="#3d6b4f" font-size="15">2 analyst-review hunt</text>
+    <text x="370" y="570" fill="#3d6b4f" font-size="15">rules plus JSON report</text>
 
     <rect x="616" y="484" width="238" height="96" rx="8" fill="#fff0f1" stroke="#efc1c7"/>
     <text x="640" y="518" fill="#8a3340" font-size="18" font-weight="700">collection_gap.json</text>
-    <text x="640" y="548" fill="#7b5056" font-size="15">missing entity counts</text>
-    <text x="640" y="570" fill="#7b5056" font-size="15">and review signal</text>
+    <text x="640" y="548" fill="#7b5056" font-size="15">0 missing normalized</text>
+    <text x="640" y="570" fill="#7b5056" font-size="15">fields in demo records</text>
 
     <rect x="886" y="484" width="238" height="96" rx="8" fill="#edf7f1" stroke="#b8dec6"/>
-    <text x="910" y="518" fill="#1c5f36" font-size="18" font-weight="700">3 records processed</text>
-    <text x="910" y="548" fill="#3d6b4f" font-size="15">English, Chinese, and</text>
-    <text x="910" y="570" fill="#3d6b4f" font-size="15">mixed-language leads</text>
+    <text x="910" y="518" fill="#1c5f36" font-size="18" font-weight="700">YARA validation</text>
+    <text x="910" y="548" fill="#3d6b4f" font-size="15">metadata, naming,</text>
+    <text x="910" y="570" fill="#3d6b4f" font-size="15">ATT&amp;CK lint pass</text>
   </g>
 
   <rect x="76" y="618" width="1048" height="36" rx="6" fill="#e8eef5"/>
-  <text x="100" y="642" fill="#304157" font-family="Segoe UI, Arial, sans-serif" font-size="16">Hiring-manager optic: the project is easy to run, inspect, and discuss without local private datasets or heavyweight model setup.</text>
+  <text x="100" y="642" fill="#304157" font-family="Segoe UI, Arial, sans-serif" font-size="16">The demo path is API-key free and uses bundled synthetic records, so outputs can be reproduced locally.</text>
 </svg>

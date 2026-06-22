@@ -1,4 +1,4 @@
-from collections_workflow.cryptic.extraction.spacy_utils import detect_lang, has_chinese, has_latin
+from cryptic.extraction.spacy_utils import detect_lang, has_chinese, has_latin
 
 
 def test_detect_language_en():

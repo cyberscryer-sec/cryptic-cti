@@ -35,4 +35,5 @@ jobs:
             tests/test_demo_and_rss.py \
             tests/test_stix_ingest.py \
             tests/test_regex_ioc_extraction.py \
-            tests/test_indicator_enrichment.py
+            tests/test_indicator_enrichment.py \
+            tests/test_yara_suggest.py

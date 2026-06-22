@@ -1,47 +1,57 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
-  <title id="title">STIX YARA and collection gap screenshot</title>
-  <desc id="desc">Screenshot showing STIX export, YARA validation pass, and collection gap metrics from the demo.</desc>
+  <title id="title">STIX YARA and collection gap outputs</title>
+  <desc id="desc">Preview of STIX export, draft YARA suggestions, YARA validation, and collection-gap artifacts from the demo run.</desc>
   <rect width="1200" height="720" fill="#f7f9fb"/>
   <rect x="40" y="36" width="1120" height="648" rx="10" fill="#ffffff" stroke="#d8dee8"/>
-  <text x="76" y="88" fill="#172033" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700">Structured CTI outputs reviewers can inspect</text>
-  <text x="76" y="122" fill="#536173" font-family="Segoe UI, Arial, sans-serif" font-size="18">Demo artifacts show export, validation, and gap-analysis behaviors from the current pipeline.</text>
+
+  <text x="76" y="88" fill="#172033" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700">CTI Export, Detection Drafts, and Gap Signals</text>
+  <text x="76" y="122" fill="#536173" font-family="Segoe UI, Arial, sans-serif" font-size="18">The demo output keeps sharing, rule review, and collection-quality checks as separate artifacts.</text>
 
   <g font-family="Segoe UI, Arial, sans-serif">
-    <rect x="76" y="162" width="330" height="430" rx="10" fill="#eef5ff" stroke="#b9cfee"/>
-    <text x="104" y="202" fill="#244d82" font-size="22" font-weight="700">STIX 2.1 bundle</text>
-    <text x="104" y="238" fill="#334b68" font-family="Consolas, Menlo, monospace" font-size="16">{</text>
-    <text x="126" y="266" fill="#334b68" font-family="Consolas, Menlo, monospace" font-size="16">"type": "bundle",</text>
-    <text x="126" y="294" fill="#334b68" font-family="Consolas, Menlo, monospace" font-size="16">"objects": [</text>
-    <text x="148" y="322" fill="#334b68" font-family="Consolas, Menlo, monospace" font-size="16">identity, marking,</text>
-    <text x="148" y="350" fill="#334b68" font-family="Consolas, Menlo, monospace" font-size="16">malware, indicator,</text>
-    <text x="148" y="378" fill="#334b68" font-family="Consolas, Menlo, monospace" font-size="16">relationship, note</text>
-    <text x="126" y="406" fill="#334b68" font-family="Consolas, Menlo, monospace" font-size="16">]</text>
-    <text x="104" y="434" fill="#334b68" font-family="Consolas, Menlo, monospace" font-size="16">}</text>
-    <rect x="104" y="482" width="258" height="58" rx="8" fill="#ffffff" stroke="#c9d8ec"/>
-    <text x="126" y="518" fill="#1c5f36" font-size="17" font-weight="700">shareable CTI artifact</text>
+    <rect x="76" y="162" width="246" height="420" rx="10" fill="#eef5ff" stroke="#b9cfee"/>
+    <text x="104" y="202" fill="#244d82" font-size="22" font-weight="700">STIX bundle</text>
+    <text x="104" y="238" fill="#334b68" font-family="Consolas, Menlo, monospace" font-size="15">ctier_stix_bundle.json</text>
+    <text x="104" y="282" fill="#304157" font-size="17">19 objects</text>
+    <text x="104" y="318" fill="#304157" font-size="17">malware objects</text>
+    <text x="104" y="354" fill="#304157" font-size="17">indicator patterns</text>
+    <text x="104" y="390" fill="#304157" font-size="17">relationships</text>
+    <text x="104" y="426" fill="#304157" font-size="17">source identity</text>
+    <rect x="104" y="502" width="176" height="52" rx="8" fill="#ffffff" stroke="#c9d8ec"/>
+    <text x="124" y="535" fill="#244d82" font-size="16" font-weight="700">shareable CTI</text>
 
-    <rect x="436" y="162" width="330" height="430" rx="10" fill="#edf7f1" stroke="#b8dec6"/>
-    <text x="464" y="202" fill="#1c5f36" font-size="22" font-weight="700">YARA lint report</text>
-    <text x="464" y="240" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="16">rule_path: demo_infostealer_rule.yar</text>
-    <text x="464" y="274" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="16">passed: true</text>
-    <text x="464" y="308" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="16">checks:</text>
-    <text x="486" y="342" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="16">metadata_and_conventions: true</text>
-    <text x="464" y="376" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="16">findings: []</text>
-    <rect x="464" y="482" width="258" height="58" rx="8" fill="#ffffff" stroke="#c8dfcf"/>
-    <text x="486" y="518" fill="#1c5f36" font-size="17" font-weight="700">rule quality signal</text>
+    <rect x="350" y="162" width="246" height="420" rx="10" fill="#edf7f1" stroke="#b8dec6"/>
+    <text x="378" y="202" fill="#1c5f36" font-size="22" font-weight="700">YARA drafts</text>
+    <text x="378" y="238" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="15">suggested_yara_rules.yar</text>
+    <text x="378" y="282" fill="#304157" font-size="17">2 draft hunt rules</text>
+    <text x="378" y="318" fill="#304157" font-size="17">Lumma Stealer</text>
+    <text x="378" y="354" fill="#304157" font-size="17">RedLine Stealer</text>
+    <text x="378" y="390" fill="#304157" font-size="17">IOC + context strings</text>
+    <text x="378" y="426" fill="#304157" font-size="17">status = draft</text>
+    <rect x="378" y="502" width="176" height="52" rx="8" fill="#ffffff" stroke="#c8dfcf"/>
+    <text x="398" y="535" fill="#1c5f36" font-size="16" font-weight="700">analyst review</text>
 
-    <rect x="796" y="162" width="328" height="430" rx="10" fill="#fff5e6" stroke="#edd2a2"/>
-    <text x="824" y="202" fill="#815611" font-size="22" font-weight="700">Collection gaps</text>
-    <text x="824" y="240" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="16">record_count: 3</text>
-    <text x="824" y="274" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="16">classification:</text>
-    <text x="846" y="308" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="16">credential-theft-or-infostealer: 3</text>
-    <text x="824" y="342" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="16">missing_malware: 0</text>
-    <text x="824" y="376" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="16">missing_activity: 0</text>
-    <text x="824" y="410" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="16">missing_data_types: 0</text>
-    <text x="824" y="444" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="16">missing_apps: 0</text>
-    <rect x="824" y="482" width="258" height="58" rx="8" fill="#ffffff" stroke="#e4c991"/>
-    <text x="846" y="518" fill="#815611" font-size="17" font-weight="700">analyst review signal</text>
+    <rect x="624" y="162" width="246" height="420" rx="10" fill="#f7f1eb" stroke="#dfc9b5"/>
+    <text x="652" y="202" fill="#6f4c2f" font-size="22" font-weight="700">YARA validation</text>
+    <text x="652" y="238" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="15">yara_validation_report.json</text>
+    <text x="652" y="282" fill="#304157" font-size="17">passed: true</text>
+    <text x="652" y="318" fill="#304157" font-size="17">metadata present</text>
+    <text x="652" y="354" fill="#304157" font-size="17">rule names valid</text>
+    <text x="652" y="390" fill="#304157" font-size="17">ATT&amp;CK tags present</text>
+    <text x="652" y="426" fill="#304157" font-size="17">findings: 0</text>
+    <rect x="652" y="502" width="176" height="52" rx="8" fill="#ffffff" stroke="#d9c4b1"/>
+    <text x="672" y="535" fill="#6f4c2f" font-size="16" font-weight="700">quality check</text>
+
+    <rect x="898" y="162" width="226" height="420" rx="10" fill="#fff5e6" stroke="#edd2a2"/>
+    <text x="926" y="202" fill="#815611" font-size="22" font-weight="700">Collection gaps</text>
+    <text x="926" y="238" fill="#304157" font-family="Consolas, Menlo, monospace" font-size="15">collection_gap.json</text>
+    <text x="926" y="282" fill="#304157" font-size="17">records: 3</text>
+    <text x="926" y="318" fill="#304157" font-size="17">missing malware: 0</text>
+    <text x="926" y="354" fill="#304157" font-size="17">missing activity: 0</text>
+    <text x="926" y="390" fill="#304157" font-size="17">missing data: 0</text>
+    <text x="926" y="426" fill="#304157" font-size="17">missing apps: 0</text>
+    <rect x="926" y="502" width="156" height="52" rx="8" fill="#ffffff" stroke="#e4c991"/>
+    <text x="946" y="535" fill="#815611" font-size="16" font-weight="700">coverage signal</text>
   </g>
 
-  <text x="76" y="654" fill="#304157" font-family="Segoe UI, Arial, sans-serif" font-size="16">Hiring-manager optic: outputs map to CTI sharing, detection rule hygiene, and collection-quality measurement.</text>
+  <text x="76" y="654" fill="#304157" font-family="Segoe UI, Arial, sans-serif" font-size="16">Generated rules are labelled as drafts; the validation report checks naming, metadata, and ATT&amp;CK tag conventions.</text>
 </svg>

@@ -29,6 +29,7 @@ cryptic-rss-ingest = "cryptic.rss_ingest.cli:main"
 cryptic-demo = "cryptic.demo.cli:main"
 cryptic-stix-ingest = "cryptic.stix_ingest.cli:main"
 cryptic-enrich-indicators = "cryptic.enrichment.cli:main"
+cryptic-yara-suggest = "cryptic.yara_suggest.cli:main"
 
 [tool.setuptools]
 py-modules = []
@@ -49,6 +50,9 @@ select = [
     "F",
     "I",
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
 
 [project.optional-dependencies]
 dev = [

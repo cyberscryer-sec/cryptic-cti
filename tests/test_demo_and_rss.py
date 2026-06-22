@@ -80,7 +80,7 @@ def test_multilingual_normalization_resolves_chinese_and_english_to_canonical_va
     assert english["n_apps"] == chinese["n_apps"] == ["Telegram"]
 
 
-def test_cryptic_demo_writes_expected_reviewer_artifacts():
+def test_cryptic_demo_writes_expected_artifacts():
     scratch = reset_scratch()
     output_dir = scratch / "demo_out"
     result_dir = run_demo("infostealer", output_dir)
@@ -90,6 +90,8 @@ def test_cryptic_demo_writes_expected_reviewer_artifacts():
         "clusters.jsonl",
         "collection_gap.json",
         "ctier_stix_bundle.json",
+        "suggested_yara_rules.yar",
+        "suggested_yara_rules.json",
         "yara_validation_report.json",
         "yara_validation_report.md",
         "analyst_report.md",
@@ -102,5 +104,6 @@ def test_cryptic_demo_writes_expected_reviewer_artifacts():
     assert "Multilingual Normalization Highlights" in report
     assert "Lumma Stealer" in report
     assert "RedLine Stealer" in report
+    assert "yara_suggestions" in report
     assert (FIXTURES_DIR / "demo_infostealer_rule.yar").exists()
     shutil.rmtree(scratch, ignore_errors=True)

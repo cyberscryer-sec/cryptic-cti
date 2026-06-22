@@ -1,42 +1,43 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
-  <title id="title">Multilingual normalization screenshot</title>
-  <desc id="desc">Screenshot showing English and Chinese infostealer phrases normalized into canonical CTI fields.</desc>
+  <title id="title">Multilingual normalization examples</title>
+  <desc id="desc">Preview showing English, Chinese, and mixed-language CTI phrases mapped into shared normalized fields.</desc>
   <rect width="1200" height="720" fill="#f7f9fb"/>
   <rect x="40" y="36" width="1120" height="648" rx="10" fill="#ffffff" stroke="#d8dee8"/>
-  <text x="76" y="88" fill="#172033" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700">Multilingual normalization is the core differentiator</text>
-  <text x="76" y="122" fill="#536173" font-family="Segoe UI, Arial, sans-serif" font-size="18">English and Chinese cybercrime leads resolve to the same analyst-ready fields.</text>
+
+  <text x="76" y="88" fill="#172033" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700">Multilingual Normalization</text>
+  <text x="76" y="122" fill="#536173" font-family="Segoe UI, Arial, sans-serif" font-size="18">English, Chinese, and mixed-language leads resolve into the same analyst-ready schema.</text>
 
   <rect x="76" y="158" width="1048" height="52" rx="8" fill="#172033"/>
-  <text x="106" y="191" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Raw phrase</text>
-  <text x="478" y="191" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Canonical field</text>
+  <text x="106" y="191" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Observed phrase</text>
+  <text x="482" y="191" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Normalized field</text>
   <text x="810" y="191" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Canonical value</text>
 
   <g font-family="Segoe UI, Arial, sans-serif" font-size="18">
     <rect x="76" y="222" width="1048" height="72" rx="6" fill="#ffffff" stroke="#e1e7ef"/>
     <text x="106" y="266" fill="#172033">RedLine</text>
-    <text x="478" y="266" fill="#536173">n_malware_or_tools</text>
+    <text x="482" y="266" fill="#536173">n_malware_or_tools</text>
     <text x="810" y="266" fill="#1c5f36" font-weight="700">RedLine Stealer</text>
 
     <rect x="76" y="304" width="1048" height="72" rx="6" fill="#f6fbff" stroke="#dbe8f6"/>
     <text x="106" y="348" fill="#172033">Lumma 窃密程序</text>
-    <text x="478" y="348" fill="#536173">n_malware_or_tools</text>
+    <text x="482" y="348" fill="#536173">n_malware_or_tools</text>
     <text x="810" y="348" fill="#1c5f36" font-weight="700">Lumma Stealer</text>
 
     <rect x="76" y="386" width="1048" height="72" rx="6" fill="#ffffff" stroke="#e1e7ef"/>
     <text x="106" y="430" fill="#172033">logs for sale / 出售日志</text>
-    <text x="478" y="430" fill="#536173">n_activity</text>
+    <text x="482" y="430" fill="#536173">n_activity</text>
     <text x="810" y="430" fill="#1c5f36" font-weight="700">log_sale</text>
 
     <rect x="76" y="468" width="1048" height="72" rx="6" fill="#f6fbff" stroke="#dbe8f6"/>
     <text x="106" y="512" fill="#172033">browser cookies / 浏览器cookie</text>
-    <text x="478" y="512" fill="#536173">n_data_types</text>
+    <text x="482" y="512" fill="#536173">n_data_types</text>
     <text x="810" y="512" fill="#1c5f36" font-weight="700">cookies</text>
 
     <rect x="76" y="550" width="1048" height="72" rx="6" fill="#ffffff" stroke="#e1e7ef"/>
     <text x="106" y="594" fill="#172033">Telegram / 电报</text>
-    <text x="478" y="594" fill="#536173">n_apps</text>
+    <text x="482" y="594" fill="#536173">n_apps</text>
     <text x="810" y="594" fill="#1c5f36" font-weight="700">Telegram</text>
   </g>
 
-  <text x="76" y="654" fill="#304157" font-family="Segoe UI, Arial, sans-serif" font-size="16">Demo output shows 3 multilingual infostealer leads with zero missing malware, activity, data type, or app fields.</text>
+  <text x="76" y="654" fill="#304157" font-family="Segoe UI, Arial, sans-serif" font-size="16">Demo records cover en, zh, and mixed-language inputs with complete malware, activity, data-type, and app normalization.</text>
 </svg>

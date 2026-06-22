@@ -6,7 +6,14 @@ import spacy
 
 from cryptic.extraction.base import ExtractionRunner
 
-nlp = spacy.load("en_core_web_sm")
+nlp = None
+
+
+def get_spacy_model():
+    global nlp
+    if nlp is None:
+        nlp = spacy.load("en_core_web_sm")
+    return nlp
 
 
 def has_chinese(text: str) -> bool:
@@ -30,7 +37,7 @@ def detect_lang(text: str) -> str:
 
 
 def spacy_prepare(text: str) -> dict:
-    doc = nlp(text)
+    doc = get_spacy_model()(text)
     sentences = list(doc.sents)
     return {
         "lang": detect_lang(text),
